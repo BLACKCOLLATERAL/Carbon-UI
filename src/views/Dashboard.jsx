@@ -44,7 +44,7 @@ class Dashboard extends Component {
         return (<>
             <Row lg="4" xs="2" className="m-5">
                 <Col className="mb-4">
-                    <CustomCard title="TOTAL VALUE LOCKED" text="$251,411"/>
+                    <CustomCard title="TOTAL VALUE LOCKED" text="251,411"/>
                 </Col>
                 <Col className="mb-4">
                     <CustomCard title="Carbon price" text="$251,411"/>
