@@ -2,8 +2,25 @@ import { Card, Col, Row, Button } from "reactstrap";
 import PoolCardTabs from "./PoolCardTabs";
 import icon from "../../assets/img/icon.PNG";
 import icon1 from "../../assets/img/icon1.PNG";
+import carbonstake from "../../views/carbonStake";
+import { Link,useHistory } from "react-router-dom";
+import cbusd from "../../views/cbusdAbi";
+import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+import black from "../../views/blackAbi";
 
 const Pools = () => {
+    const [balance,setbalan] = useState([]);
+    const [communitybalance,setcommunitybalan] = useState([]);
+    const bvb = async() => {
+       setbalan(await cbusd.methods.balanceOf("0x3a7CD9084072c0178ED6EbACAF1926E2E9e57D43").call());       
+       console.log("balan",balance);
+       setcommunitybalan(await black.methods.balanceOf("0x2fa541c7457fbd89b727dfa2f3b1423c66c353dd").call());
+    }
+    useEffect(()=>{bvb()},[balance])
+
+    let history=useHistory();
     return (
         <Row className="m-3 m-md-5">
             <Col xl="4" md="6" className="mb-4">
@@ -92,7 +109,8 @@ const Pools = () => {
                                     src={icon}
                                     alt="Card image cap"
                                 />
-                                1,428.5714
+                                0.00
+                               
                             </p>
                         </div>
                     </div>
@@ -122,7 +140,7 @@ const Pools = () => {
                                     src={icon}
                                     alt="Card image cap"
                                 />
-                                61,458.6806
+                                 {parseFloat(communitybalance/1000000000).toFixed(3)}
                             </p>
                         </div>
                     </div>
@@ -152,12 +170,13 @@ const Pools = () => {
                                     src={icon}
                                     alt="Card image cap"
                                 />
-                                90,467,215.0188
+                               {parseFloat(balance/1000000000000000000).toFixed(3)}
                             </p>
                         </div>
                     </div>
-                    <Button className={`ml-3 mr-3 pb-0 mb-0 mt-2 mb-2
-                        `} color="site-primary" width="full">View pool</Button>
+                       
+                    <Button  className={`ml-3 mr-3 pb-0 mb-0 mt-2 mb-2
+                        `} color="site-primary" width="full" onClick={e => {history.push("/carbon-stake")}}>View pool</Button> 
                 </Card>
             </Col>
             <Col xl="4" md="6" className="mb-4">
@@ -231,7 +250,7 @@ const Pools = () => {
                         </div>
                     </div>
                     <Button className={`ml-3 mr-3 pb-0 mb-0 mt-2 mb-2`}
-                        color="site-primary" width="full">View pool</Button>
+                        color="site-primary" width="full"  onClick={e => {history.push("/lp-stake")}}>View pool</Button>
                 </Card>
             </Col>
             <Col xl="4" md="6" className="mb-4">
@@ -305,7 +324,7 @@ const Pools = () => {
                         </div>
                     </div>
                     <Button className={`ml-3 mr-3 pb-0 mb-0 mt-2 mb-2`}
-                        color="site-primary" width="full">View pool</Button>
+                        color="site-primary" width="full" onClick={e => {history.push("/black-stake")}}>View pool</Button>
                 </Card>
             </Col>
 

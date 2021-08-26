@@ -6,7 +6,9 @@ import Dashboard from '../views/Dashboard';
 import Vault from '../views/Vault';
 import Swap from '../views/Swap';
 import BurnVault from '../views/BurnVault';
-
+import carbonStake from'../views/carbonStake';
+import blackStake from '../views/blackStaking';
+import lpStake from '../views/LpStaking';
 let routes = [
 	{
 		path: '/auth',
@@ -53,6 +55,24 @@ let routes = [
 		path: '/burn-vault',
 		name: 'Burn Vault',
 		component: BurnVault,
+		layout: 'main',
+	},
+	{
+		path: '/carbon-stake',
+		name: 'carbon stake',
+		component: carbonStake,
+		layout: 'main',
+	},
+	{
+		path: '/black-stake',
+		name: 'black stake',
+		component: blackStake,
+		layout: 'main',
+	},
+	{
+		path: '/lp-stake',
+		name: 'lp stake',
+		component: lpStake,
 		layout: 'main',
 	},
 ];
