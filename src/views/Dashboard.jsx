@@ -79,11 +79,11 @@ class Dashboard extends Component {
        //const totaldepositedcarbonpool=await cbusd.methods.balanceOf("0x3a7CD9084072c0178ED6EbACAF1926E2E9e57D43").call()); 
        const totaldeposited =(parseFloat(totaldeposited1/1000000000000000000).toFixed(3));
        //const totalvaluelock1 =await valutadapter.methods.totalValue().call();
-       const totaldepositedcarbonpool1=await cbusdtoken.methods.balanceOf("0xb2690f8851dFa22E7Fc755b0AF697AbD173CF964").call(); 
+       const totaldepositedcarbonpool1=await cbusdtoken.methods.balanceOf("0x1b302657E2ed17c4b1073Ea146986a6270757529").call(); 
        const totaldepositedcarbonpool =(parseFloat(totaldepositedcarbonpool1/1000000000000000000).toFixed(3));
-       const totaldepositedLppool1=await cbusdpair.methods.balanceOf("0x47b58c81DD4b40E277734Ab16071e488b19430a9").call(); 
+       const totaldepositedLppool1=await cbusdpair.methods.balanceOf("0x801BE19F7963A0d0656FA48039125cf956Db42b5").call(); 
        const totaldepositedLppool =(parseFloat(totaldepositedLppool1/1000000000000000000).toFixed(3));
-       const totaldepositedblackpool1=await black.methods.balanceOf("0x8f40a5c5fE040dBD2B6077f31e6c54DAB6289027").call(); 
+       const totaldepositedblackpool1=await black.methods.balanceOf("0xC90b6328370e93184d16b98A6bFF13e201FCf27F").call(); 
        const totaldepositedblackpool =(parseFloat(totaldepositedblackpool1/1000000000000000000).toFixed(3));
       // const totalvaluelocked =(parseFloat(((totaldeposited) + (totaldepositedcarbonpool) + (totaldepositedLppool) + (totaldepositedblackpool))).toFixed(3));
        const totalvaluelocked = (parseFloat (totaldeposited) +parseFloat (totaldepositedcarbonpool)) + (parseFloat(totaldepositedLppool) + parseFloat(totaldepositedblackpool));
@@ -91,13 +91,14 @@ class Dashboard extends Component {
        console.log("totaldepositedcarbonpool",totaldepositedcarbonpool);
        console.log("totaldepositedLppool",totaldepositedLppool);
        console.log("totaldepositedblackpool",totaldepositedblackpool);
-
-       const carbonprice1=await  carbonoracle.methods.getDittoBnbRate().call();
-       const carbonprice=(parseFloat((carbonprice1[3])/1000000000).toFixed(11));
-
+       const priceofbusd= await busd.methods.balanceOf("0x7F7701C1F75146ca746C89A7479e95a19Cf2bC24").call();
+       const priceofcbusd= await cbusd.methods.balanceOf("0x7F7701C1F75146ca746C89A7479e95a19Cf2bC24").call();
+       const carbonprice1= (priceofbusd)/(priceofcbusd);
+       const carbonprice=(parseFloat(carbonprice1).toFixed(3));
        console.log("carbonpricecheck",carbonprice);
        this.setState({setLoading:true});
-       const response = await fetch("https://api-testnet.bscscan.com/api?module=account&action=tokentx&address=0x27A8DE88408102b4C14c1DbB1695a666A8686e6a&startblock=0&endblock=250000000000&sort=desc&apikey=YourApiKeyToken");
+       if(localStorage.getItem("wallet")>0){
+       const response = await fetch("https://api.bscscan.com/api?module=account&action=tokentx&address=0x238B7EBb221A307bd2a99bcDc6C169899733dce9&startblock=0&endblock=250000000000&sort=desc&apikey=YourApiKeyToken");
        const data = await response.json();
        console.log("data",data);
         //var assign= data.result; 
@@ -146,8 +147,7 @@ class Dashboard extends Component {
         //this.setState({setcount:count1});
         
 
-       this.setState({totalsupply,totaldeposited,totalvaluelocked}); 
-       this.setState({carbonprice});
+     
        //this.setState({carbonprice:await  carbonoracle.methods.getDittoBnbRate().call()});
        
        this.state.datas.map((a)=>{            
@@ -168,7 +168,7 @@ class Dashboard extends Component {
            console.log("filterddata",filtdata);  
            this.setState({setfiltdata:filtdata}) 
 
-           const filtdata2=data.result.filter((a)=>parseInt(a.from)===parseInt("0x27A8DE88408102b4C14c1DbB1695a666A8686e6a"));
+           const filtdata2=data.result.filter((a)=>parseInt(a.from)===parseInt("0x238B7EBb221A307bd2a99bcDc6C169899733dce9"));
            console.log("filterddata2",filtdata2);  
            this.setState({setfiltdata2:filtdata2}) 
         //    this.setState({cart: [this.state.filtdata, this.state.input]});
@@ -176,6 +176,9 @@ class Dashboard extends Component {
         const filtdata3=filtdata2.filter((a)=>parseInt(a.to)===this.state.setad);
         console.log("filterddata3",filtdata3);  
         this.setState({setfiltdata3:filtdata3}) 
+    }
+    this.setState({totalsupply,totaldeposited,totalvaluelocked}); 
+     this.setState({carbonprice});
     } 
    
  
@@ -204,7 +207,7 @@ class Dashboard extends Component {
                     <CustomCard title="Total Deposited" title2="$" text= {this.state.totaldeposited}></CustomCard>
                 </Col>
                 <Col className="mb-4">
-                    <CustomCard title="Total cbUSD Borrowed" text={this.state.totalsupply}/>
+                    <CustomCard title="Total cbUSD Borrowed" text={this.state.totalsupply} />
                 </Col>
                 <Col className="mb-4">
                     <CustomCard title="cbUSD Circulating Supply" text={this.state.totalsupply} />
@@ -313,7 +316,7 @@ class Dashboard extends Component {
                                      <div className="pl-2 pr-2">
                                          
                                          {
-                                             a.from === "0x27A8DE88408102b4C14c1DbB1695a666A8686e6a" ?(
+                                             a.from === "0x238B7EBb221A307bd2a99bcDc6C169899733dce9" ?(
                                                  
                                              <h6 style={{ fontWeight: "600" }}>withdraw</h6>):
                                              (
@@ -442,10 +445,10 @@ class Dashboard extends Component {
                                       />
                                       <div className="pl-2 pr-2">
                                           {
-                                              a.from === "0x27A8DE88408102b4C14c1DbB1695a666A8686e6a" ?(
-                                              <h6 style={{ fontWeight: "600" }}>withdraw</h6>):
+                                              a.from === "0x238B7EBb221A307bd2a99bcDc6C169899733dce9" ?(
+                                              <h6 style={{ fontWeight: "600" }}>Deposit</h6>):
                                               (
-                                            <h6 style={{ fontWeight: "600" }}>Deposit</h6>
+                                            <h6 style={{ fontWeight: "600" }}>Withdraw</h6>
                                               )
                                           }
                                           {/* <h6 style={{ fontWeight: "600" }}></h6> */}

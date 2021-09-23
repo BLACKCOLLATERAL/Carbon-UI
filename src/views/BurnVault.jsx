@@ -104,7 +104,7 @@ const BurnVault = () => {
 
       
 
-        var allowan = await black.methods.allowance(account[0],"0x2f52686F07F502Ff3F5495E8aDd917898da23117").call();
+        var allowan = await black.methods.allowance(account[0],"0x4508Aa1C69a431a550428A282aE3643B9f5Ed325").call();
        if(allowan == 0){
         setId4(true);
         }
@@ -123,7 +123,7 @@ const BurnVault = () => {
     const approve = async() => {
         let account = await web3.eth.getAccounts();
         let amount = 1000000000000000000 +"000000000000000000";
-        await black.methods.approve("0x2f52686F07F502Ff3F5495E8aDd917898da23117",amount).send({from:account[0]});
+        await black.methods.approve("0x4508Aa1C69a431a550428A282aE3643B9f5Ed325",amount).send({from:account[0]});
         bvb();
         setIsOpen(true); 
         setDis("Approved successfully");
@@ -304,7 +304,7 @@ const BurnVault = () => {
                 <CustomCard title="MAXIMUM TRANSACTION LIMIT" text= {parseFloat(maxta/1000000000).toFixed(3)}/>
             </Col>
             <Col xl="4" lg="6" md="6" className="mb-4">
-                <Card className="custom-card p-24 text-white" color="site-primary">
+                <Card className="custom-card p-24 text-black" color="site-primary">
                 <div>         
 
 
@@ -329,7 +329,7 @@ const BurnVault = () => {
 (
  
 <div>
-                    <p>Convert Your BLACK to BNB</p>
+                    <p><b><center>CONVERT YOUR BLACK TO BNB</center></b></p>
                     <div className="text-center text-Black">
                     {/* <Button color="dark" >Approved successfully</Button> */}
                     <Button color="dark"  id = "tid"     onClick={() => setModalShow1(true)}>Swap</Button>

@@ -130,19 +130,15 @@ body {
 }
 
 .btn {
-	font-size: 14px;
-	padding: 12px 32px !important;
-	font-weight: 700;
-	// display: flex;
+	color: #fff !important;
+    background: #e91f8b;
+    background: -moz-linear-gradient(266deg, rgba(233,31,139,1) 0%, rgba(255,137,19,1) 87%);
+    background: -webkit-linear-gradient(266deg, rgba(233,31,139,1) 0%, rgba(255,137,19,1) 87%);
+    background: linear-gradient(266deg, rgba(233,31,139,1) 0%, rgba(255,137,19,1) 87%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#e91f8b",endColorstr="#ff8913",GradientType=1);
 }
 .btnD {
-	font-size: 14px;
-	padding: 30px 32px !important;
-	font-weight: 700;
-	color: black;
-	background-color: white;
-	border: 1px solid rgb(255, 0, 131);
-	border-radius: 5px;
+	color: #ea2386;
 }
 
 .theme-nav-items {
@@ -163,8 +159,13 @@ body {
 		}
 
 		&:hover {
-			background-color: rgba(theme-color('site-primary'), 0.08);
-			color: theme-color('site-primary') !important;
+			
+			color: 	 #fff !important;
+			background: #e91f8b;
+			background: -moz-linear-gradient(266deg, rgba(233,31,139,1) 0%, rgba(255,137,19,1) 87%);
+			background: -webkit-linear-gradient(266deg, rgba(233,31,139,1) 0%, rgba(255,137,19,1) 87%);
+			background: linear-gradient(266deg, rgba(233,31,139,1) 0%, rgba(255,137,19,1) 87%);
+			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#e91f8b",endColorstr="#ff8913",GradientType=1);
 			span {
 				color: rgba(theme-color('site-nav-link'), 1);
 			}
@@ -179,7 +180,12 @@ body {
 			width: 5px;
 			height: 100%;
 			content: '';
-			background-color: theme-color('site-primary');
+			color: #fff !important;
+    background: #e91f8b;
+    background: -moz-linear-gradient(266deg, rgba(233,31,139,1) 0%, rgba(255,137,19,1) 87%);
+    background: -webkit-linear-gradient(266deg, rgba(233,31,139,1) 0%, rgba(255,137,19,1) 87%);
+    background: linear-gradient(266deg, rgba(233,31,139,1) 0%, rgba(255,137,19,1) 87%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#e91f8b",endColorstr="#ff8913",GradientType=1);
 			position: absolute;
 			left: -15px;
 			top: 0;

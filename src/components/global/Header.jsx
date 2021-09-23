@@ -9,7 +9,12 @@ const Header = (props) => {
     const[walletconnect,setwalletconnect]=useState();
     const [isOpen, setIsOpen] = useState(false);
     var[dis,setDis] = useState("");
-    console.log("checkwalletconnect",walletconnect)
+    console.log("checkwalletconnect",walletconnect);
+    var s = localStorage.getItem("wallet");
+    if(s === 'undefined'){
+        localStorage.setItem("wallet","");
+    }
+    console.log("storage",s)
     const toggleNav = () => {        
         let sidebar = document.getElementsByClassName("sidebar")[0];
         sidebar.classList.toggle("collapse");         
@@ -19,7 +24,7 @@ const Header = (props) => {
     const Connectwallet=async()=>{                  
         const networkid=await web3.eth.getChainId();
         console.log("network id",networkid);
-        if(networkid!=97){
+        if(networkid!=56){
         setIsOpen(true);
         setDis("Connected to Wrong Network,Please connect to Binance Mainnet");
         }else{
@@ -60,7 +65,7 @@ const Header = (props) => {
        <Modald visible={isOpen} onClose={() => setIsOpen(false)}>
         <FolowStepsd viewhistory={dis}  />
       </Modald>
-        <div className="header bg-site-secondary">
+        <div className="header bg-site-secondary ">
             <Container fluid className="px-md-5">
                 <div className="d-flex align-items-center font-semi-bold">
                     <span className="mr-3 toggler-btn" onClick={e=>toggleNav()}><i className="fa fa-bars"></i></span>
