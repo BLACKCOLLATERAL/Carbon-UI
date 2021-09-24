@@ -19,7 +19,7 @@ const Cbusdstake = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [dropdownOpen1, setDropdownOpen1] = useState(false);
     const [multiple, setMultiple] = useState(false);
-    const [selectedDropdown, setSelectedDropdown] = useState("cBUSD");
+    const [selectedDropdown, setSelectedDropdown] = useState("cbUSD");
     const [selectedDropdown1, setSelectedDropdown1] = useState("No Yield");
     const[tid,setId] = useState("");
     const[tid1,setId1] = useState("");
@@ -386,13 +386,13 @@ const Cbusdstake = () => {
                     <Col xl="8" lg="8" md="10" sm="12">
                         <Card className="custom-card">
                             <div className="p-3">
-                                <h4>stake  cBUSD </h4>
-                                <h6>The Stake cBUSD and get Black token as reward</h6>
+                                <h4>stake  cbUSD </h4>
+                                <h6>The Stake cbUSD and get Black token as reward</h6>
                                 <Table bordered responsive className="mt-3">
                                     <thead>
                                         <tr>
-                                            <th>Your cBUSD</th>
-                                            <th>Staked cBUSD</th>
+                                            <th>Your cbUSD</th>
+                                            <th>Staked cbUSD</th>
                                             <th>Remaining Amount to Stake </th>
                                             <th>Black reward</th>
                                             <th>Your Black</th>
@@ -481,13 +481,13 @@ const Cbusdstake = () => {
                     <Col xl="8" lg="8" md="10" sm="12">
                         <Card className="custom-card">
                             <div className="p-3">
-                                <h4>stake  cBUSD </h4>
-                                <h6>The Stake cBUSD and get Black token as reward</h6>
+                                <h4>stake  cbUSD </h4>
+                                <h6>The Stake cbUSD and get Black token as reward</h6>
                                 <Table bordered responsive className="mt-3">
                                     <thead>
                                         <tr>
-                                            <th>Your cBUSD</th>
-                                            <th>Staked cBUSD</th>
+                                            <th>Your cbUSD</th>
+                                            <th>Staked cbUSD</th>
                                             <th>Remaining Amount to Stake </th>
                                             <th>Black reward</th>
                                             <th>Your Black</th>
