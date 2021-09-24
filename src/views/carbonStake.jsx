@@ -3,14 +3,17 @@ import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Button, Dropdown, Card, Col, Container, DropdownItem, DropdownMenu, DropdownToggle, Input, InputGroup, InputGroupAddon, InputGroupButtonDropdown, InputGroupText, Row, Table } from "reactstrap";
 import web3 from "../web3";
-import swap from "./swapAbi";
-import cbusd from "./cbusdAbi";
-import cbusdstake from "./carbonStakeAbi";
-import black from "./blackAbi";
+//import swap from "./swapAbi";
+//import cbusd from "./cbusdAbi";
+//import cbusdstake from "./carbonStakeAbi";
+//import black from "./blackAbi";
 import Popup from "../Popup";
 import Modald from "../ModalD";
 import FolowStepsd from "../FolowStepsd";
 import BigNumber from "bignumber.js";
+
+import { contracts } from './contractAddress';
+import {blackabi, cbusdstake,cbusd, carbonstake } from './abi';
 const Cbusdstake = () => {
     let [activeTab, setActiveTab] = useState("Deposit");
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -46,15 +49,37 @@ const Cbusdstake = () => {
     let history = useHistory();
     const [isOpen, setIsOpen] = useState(false);
     var[dis,setDis] = useState("");
+    const[stakeenddate,setStakeendDate]=useState('');
+    const cbusdcontract = new web3.eth.Contract(cbusd, contracts.cbusd.address);
+    const cbusdstakecontract = new web3.eth.Contract(carbonstake, contracts.carbonstake.address);
+    const blackcontract = new web3.eth.Contract(blackabi, contracts.black.address);
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            var  currentdate=(new Date().getTime())/1000;
+            var enddatediff =1632491910-currentdate;
+            if(enddatediff>0){
+                setStakeendDate(1);
+        
+            }
+            else{
+                setStakeendDate(0);
+                console.log("enddate",stakeenddate);
+            }
+        
+        };
     
+        fetchPosts();
+      }, []);
  const first = async () => {
-    if(localStorage.getItem("wallet")>0){
+    
+       if(localStorage.getItem("wallet")>0){
     const accounts =  await web3.eth.getAccounts();
  
-    setcbusdbalance(await cbusd.methods.balanceOf(accounts[0]).call());  
+    setcbusdbalance(await cbusdcontract.methods.balanceOf(accounts[0]).call());  
 
     
-    let b= await cbusd.methods.allowance(accounts[0],"0x1b302657E2ed17c4b1073Ea146986a6270757529").call();
+    let b= await cbusdcontract.methods.allowance(accounts[0],contracts.carbonstake.address).call();
  
     if(b>0){
       setAP(true);
@@ -63,22 +88,22 @@ const Cbusdstake = () => {
       setAP(false);
     }
    // setValues(await swap.methods.userInfo(accounts[0]).call());
-    setStaked(await cbusdstake.methods.userInfo(accounts[0]).call());
-    setBlackBalance(await black.methods.balanceOf(accounts[0]).call());
+    setStaked(await cbusdstakecontract.methods.userInfo(accounts[0]).call());
+    setBlackBalance(await blackcontract.methods.balanceOf(accounts[0]).call());
     // var poolinfo=[];
     // poolinfo=await cbusdstake.methods.poolInfo().call();
     // var reward1=((staked[0] * poolinfo[3])/1000000000000000000);
     // var reward2=reward1-staked[1];
     // console.log("reward1",reward1);
     // console.log("reward2",reward2);
-    setReward(await cbusdstake.methods.pendingBlack(accounts[0]).call());
-    var stakedamount=await cbusdstake.methods.getHoldersRunningStakeBalance().call({from:accounts[0]});
+    setReward(await cbusdstakecontract.methods.pendingBlack(accounts[0]).call());
+    var stakedamount=await cbusdstakecontract.methods.getHoldersRunningStakeBalance().call({from:accounts[0]});
     console.log("stakedamount",stakedamount);
     var Remainingamount=1000000000000000000000000-stakedamount;
     setRemainingamount(Remainingamount);
-    setStakeLock(await cbusdstake.methods.lock(accounts[0]).call());
-    var secondsleft =await cbusdstake.methods.secondsLeft(accounts[0]).call();
-    var us =await cbusdstake.methods.holderUnstakeRemainingTime(accounts[0]).call();
+    setStakeLock(await cbusdstakecontract.methods.lock(accounts[0]).call());
+    var secondsleft =await cbusdstakecontract.methods.secondsLeft(accounts[0]).call();
+    var us =await cbusdstakecontract.methods.holderUnstakeRemainingTime(accounts[0]).call();
     var now = new Date().getTime();
     if(us<=now){
     setlock(true);
@@ -87,7 +112,7 @@ const Cbusdstake = () => {
       setlock(false);
     }
     
-    var us=await cbusdstake.methods.holderUnstakeRemainingTime(accounts[0]).call();
+    var us=await cbusdstakecontract.methods.holderUnstakeRemainingTime(accounts[0]).call();
     var sl=(secondsleft *1000);
     var lockedtime=sl+now;
     console.log("secondsleft",lockedtime);
@@ -162,13 +187,13 @@ const Cbusdstake = () => {
 
     }   
 }      
-
+ 
     useEffect(() => {
         document.getElementById("header-title").innerText = "Staking";
     } )
     useEffect(() => {first()},[cbusdbalance,reward,ap1,staked[0],blackbal,discal])
     useEffect(() =>{first()},[date1,lock1,time1])
-
+    
    
     const deposit = async(event) => {
         event.preventDefault();
@@ -184,7 +209,7 @@ const Cbusdstake = () => {
 
         if(parseInt(value)<=parseInt(cbusdbalance)){
             if(parseInt(value)<(Remainingamount)){
-                await cbusdstake.methods.deposit(web3.utils.toBN(value)).send({from:accounts[0]});
+                await cbusdstakecontract.methods.deposit(web3.utils.toBN(value)).send({from:accounts[0]});
                 setIsOpen(true);
                 setDis("Staked Succesfully")
                 first();
@@ -212,7 +237,7 @@ const Cbusdstake = () => {
         var val = valu * 1000000000;
          var value = val * 1000000000;
         if(parseInt(value)<=parseInt(staked[0])){
-            await cbusdstake.methods.withdraw(web3.utils.toBN(value)).send({from:accounts[0]});
+            await cbusdstakecontract.methods.withdraw(web3.utils.toBN(value)).send({from:accounts[0]});
             setIsOpen(true);
             setDis("Unstaked Succesfully")
             first()
@@ -227,7 +252,7 @@ const Cbusdstake = () => {
         event.preventDefault();
         if(parseInt(reward) >parseInt(100000000000)){
             const accounts =  await web3.eth.getAccounts();
-            await cbusdstake.methods.claimReward().send({from:accounts[0]}); 
+            await cbusdstakecontract.methods.claimReward().send({from:accounts[0]}); 
             setIsOpen(true);
             setDis("Rewards Claimed Successfully")   
         }
@@ -242,7 +267,7 @@ const Cbusdstake = () => {
       const emergencywithdraw = async(event) => {
         event.preventDefault();
         const accounts =  await web3.eth.getAccounts();
-        await cbusdstake.methods.emergencyWithdraw().send({from:accounts[0]});
+        await cbusdstakecontract.methods.emergencyWithdraw().send({from:accounts[0]});
         setIsOpen(true);
         setDis("Withdrawn Successfully")        
         first()
@@ -330,7 +355,7 @@ const Cbusdstake = () => {
       const approve = async() => {
         let account = await web3.eth.getAccounts();
         let amount = 1000000000000000000 +"000000000000000000"; 
-        await cbusd.methods.approve("0x1b302657E2ed17c4b1073Ea146986a6270757529",amount).send({from:account[0]});
+        await cbusdcontract.methods.approve(contracts.carbonstake.address,amount).send({from:account[0]});
         setIsOpen(true);
         setDis("Approved Succesfully")
         first()
@@ -388,10 +413,11 @@ const Cbusdstake = () => {
                                 <Container fluid>
                                     <Row>
                                         <Col xl="6" md="12">
-                                        
+                                        {stakeenddate===1 ? (<> 
                                             <InputGroup className="mt-3">
-                                                <Input placeholder={depositpercent} style={{ height: "auto" }}type = "number" id="tid1"  />
-                                                <InputGroupAddon addonType="append"><Button color="site-primary" >stake</Button></InputGroupAddon>
+                                                
+                                                
+                                                <InputGroupAddon addonType="append"><Button color="site-primary" style={{ height: "auto" }}>stake</Button></InputGroupAddon>
                                             </InputGroup>
                                             <div className="percentage smaller">
                                                 <div className="percentage-item" >25%</div>
@@ -399,6 +425,15 @@ const Cbusdstake = () => {
                                                 <div className="percentage-item">75%</div>
                                                 <div className="percentage-item" >100%</div>
                                             </div>
+                                        </>):(<> 
+                                            <InputGroup className="mt-3">
+                                                
+                                                
+                                                <InputGroupAddon addonType="append"><Button color="site-primary" >STAKING POOL IS ENDED</Button></InputGroupAddon>
+                                            </InputGroup>
+
+                                        </>)}
+                                           
                                         </Col>
                                         <Col xl="6" md="12">
                                    
@@ -481,7 +516,10 @@ const Cbusdstake = () => {
                                         <Col xl="6" md="12">
                                         { stakelock === false ? ((
                                              <div>
-                                            <InputGroup className="mt-3">
+
+                                      {stakeenddate===1 ?(<> 
+
+                                        <InputGroup className="mt-3">
                                                 <Input placeholder={depositpercent} style={{ height: "auto" }}type = "number" id="tid1"  />
                                                 <InputGroupAddon addonType="append"><Button color="site-primary" onClick={deposit}>stake</Button></InputGroupAddon>
                                             </InputGroup>
@@ -491,6 +529,16 @@ const Cbusdstake = () => {
                                                 <div className="percentage-item" onClick={balancepercent2}>75%</div>
                                                 <div className="percentage-item" onClick={balancepercent3}>100%</div>
                                             </div>
+                                      </>):(<>
+
+                                        <InputGroup className="mt-3">
+                                              
+                                                <InputGroupAddon addonType="append"><Button color="site-primary"  style={{marginLeft:"40px"}} >STAKING POOL IS ENDED</Button></InputGroupAddon>
+                                            </InputGroup>
+                                            
+                                       </>)
+                                      }
+                                            
                                             </div>
                                              )) :((<>
 
