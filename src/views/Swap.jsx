@@ -5,13 +5,17 @@ import { Link, useHistory } from "react-router-dom";
 import Popup from "../Popup";
 import { Button, Dropdown, Card, Col, Container, DropdownItem, DropdownMenu, DropdownToggle, Input, InputGroup, InputGroupAddon, InputGroupButtonDropdown, InputGroupText, Row, Table } from "reactstrap";
 import web3 from "../web3";
-import swap from "./swapAbi";
-import cbusd from "./cbusdAbi";
-import valutadapter from"./vaultAdapterAbi";
-import busd from "./busdAbi";
+//import swap from "./swapAbi";
+//import cbusd from "./cbusdAbi";
+//import valutadapter from"./vaultAdapterAbi";
+//import busd from "./busdAbi";
 import Modald from "../ModalD";
 import FolowStepsd from "../FolowStepsd";
+import BigNumber from 'bignumber.js';
 //import styles from ".././FolowSteps.module.sass";
+
+import { contracts } from './contractAddress';
+import {swap,cbusd,vaultAdapterAbi,busd} from './abi';
 
 const Swap = () => {
     let [activeTab, setActiveTab] = useState("Deposit");
@@ -38,14 +42,19 @@ const Swap = () => {
     const [isOpen, setIsOpen] = useState(false);
     var[dis,setDis] = useState("");
     
+    const swapcontract = new web3.eth.Contract(swap, contracts.swap.address);
+    const cbusdcontract = new web3.eth.Contract(cbusd, contracts.cbusd.address);
+    const vaaultadaptercontract = new web3.eth.Contract(vaultAdapterAbi, contracts.vaultadapter.address);
+    const busdcontract = new web3.eth.Contract(busd, contracts.busd.address);
+
  const first = async () => {
      if(localStorage.getItem("wallet")>0){
     const accounts =  await web3.eth.getAccounts(); 
-    setcbusdbalance(await cbusd.methods.balanceOf(accounts[0]).call());  
-    setTotalcbusddepo(await cbusd.methods.balanceOf("0x7F53d063E8aB5bde5e262571777ec4BD586Eaa70").call());
-    setTotalbusddepo(await busd.methods.balanceOf("0x7F53d063E8aB5bde5e262571777ec4BD586Eaa70").call());
-    setTotalbusdonalpaca(await swap.methods.getVaultTotalDeposited(0).call());
-    let b= await cbusd.methods.allowance(accounts[0],"0x7F53d063E8aB5bde5e262571777ec4BD586Eaa70").call();
+    setcbusdbalance(await cbusdcontract.methods.balanceOf(accounts[0]).call());  
+    setTotalcbusddepo(await cbusdcontract.methods.balanceOf(contracts.swap.address).call());
+    setTotalbusddepo(await busdcontract.methods.balanceOf(contracts.swap.address).call());
+    setTotalbusdonalpaca(await swapcontract.methods.getVaultTotalDeposited(0).call());
+    let b= await cbusdcontract.methods.allowance(accounts[0],contracts.swap.address).call();
  
     if(b>0){
       setAP(true);
@@ -53,8 +62,25 @@ const Swap = () => {
     else{
       setAP(false);
     }
-    setValues(await swap.methods.userInfo(accounts[0]).call());
-    setTotalvalueLocked(await valutadapter.methods.totalValue().call());
+     var depositedcbusd= await swapcontract.methods.depositedCfTokens(accounts[0]).call();
+     if(depositedcbusd == 0){
+        values[0]=0;
+        values[1]=0;
+        values[2]=0;
+        values[3]=0;
+        console.log("values0",values[0]);
+        console.log("values1",values[1]);
+     }
+else{
+    var userdetail=[];
+    userdetail=await swapcontract.methods.userInfo(accounts[0]).call();
+    console.log("displaydetail",userdetail);
+   setValues(userdetail);
+   console.log("display");
+}
+   
+    setTotalvalueLocked(await vaaultadaptercontract.methods.totalValue().call());
+    
     }
    
 }      
@@ -63,16 +89,20 @@ const Swap = () => {
         document.getElementById("header-title").innerText = "Stabilizer";
     } )
     useEffect(() =>         
-    {first()},[cbusdbalance,ap1,values[0],values[1],values[2],values[3],ap1])
+    {first()},[cbusdbalance,values[0],values[1],values[2],values[3],ap1,totalvaluelocked])
+    
    
     const deposit = async(event) => {
         event.preventDefault();
         const accounts =  await web3.eth.getAccounts();
         var valu = document.getElementById("tid1").value;
-        var val = valu * 1000000000;
-        var value = val + "000000000"
+         var val = valu * 1000000000;
+         var value = val * 1000000000;
+        // let x = new BigNumber(valu).times(1000000000000000000);
+        // console.log("value",x.toNumber());
+        // var value = x.toNumber();
         if(parseInt(value)<=parseInt(cbusdbalance)){
-            await swap.methods.stake(value).send({from:accounts[0]});
+            await swapcontract.methods.stake(web3.utils.toBN(value)).send({from:accounts[0]});
             first()
             setIsOpen(true);        
             setDis("Deposited succesfully");
@@ -91,10 +121,13 @@ const Swap = () => {
        
         const accounts =  await web3.eth.getAccounts();
         var valu = document.getElementById("tid2").value;
-        var val = valu * 1000000000;
-        var value = val + "000000000"
+         var val = valu * 1000000000;
+         var value = val * 1000000000;
+        // let x = new BigNumber(valu).times(1000000000000000000);
+        // console.log("value",x.toNumber());
+        // var value = x.toNumber();
         if(parseInt(value)<=parseInt(values[0])){
-            await swap.methods.unstake(value).send({from:accounts[0]});
+            await swapcontract.methods.unstake(web3.utils.toBN(value)).send({from:accounts[0]});
             first()
             setIsOpen(true);
             setDis("withdrawn succesfully")
@@ -112,7 +145,7 @@ const Swap = () => {
         event.preventDefault();
         const accounts =  await web3.eth.getAccounts();
         if(parseInt(values[2]) >parseInt(0)){
-          await swap.methods.transmute().send({from:accounts[0]});
+          await swapcontract.methods.transmute().send({from:accounts[0]});
           first()
           setIsOpen(true);
           setDis("Stabilize succesfully !")
@@ -120,7 +153,7 @@ const Swap = () => {
         else{
             first()
             setIsOpen(true);
-          setDis("You dont have Transmutable BASE token")
+          setDis("You don't have Stabilizable BUSD ")
         }
        
         
@@ -129,7 +162,7 @@ const Swap = () => {
         event.preventDefault();
         const accounts =  await web3.eth.getAccounts();
         if(parseInt(values[3]) >parseInt(0)){
-          await swap.methods.transmuteClaimAndWithdraw().send({from:accounts[0]});
+          await swapcontract.methods.transmuteClaimAndWithdraw().send({from:accounts[0]});
           first()
           setIsOpen(true);
           setDis("Claim and withdraw succesfully")
@@ -149,18 +182,18 @@ const Swap = () => {
         const accounts =  await web3.eth.getAccounts(); 
         document.getElementById("tid1").value = false;  
         var twentyfive=(cbusdbalance * 25)/100;
-        setdepositpercent(Number((twentyfive/1000000000000000000).toString().match(/^\d+(?:\.\d{0,3})?/)));
+        setdepositpercent(web3.utils.fromWei((twentyfive.toString()), "ether" ));
        
-        document.getElementById("tid1").value = Number((twentyfive/1000000000000000000).toString().match(/^\d+(?:\.\d{0,3})?/));        
+        document.getElementById("tid1").value = web3.utils.fromWei((twentyfive.toString()), "ether" ) ;        
         
       }
        const balancepercent1 = async(event) => {
         event.preventDefault();
         const accounts =  await web3.eth.getAccounts(); 
         document.getElementById("tid1").value = false;    
-        var fifty=(cbusdbalance * 50)/100;
-        setdepositpercent(Number((fifty/1000000000000000000).toString().match(/^\d+(?:\.\d{0,3})?/)));
-        document.getElementById("tid1").value = Number((fifty/1000000000000000000).toString().match(/^\d+(?:\.\d{0,3})?/));          
+        const fifty=(cbusdbalance * 50)/100;
+        setdepositpercent(web3.utils.fromWei((fifty.toString()), "ether" ) );
+        document.getElementById("tid1").value = web3.utils.fromWei((fifty.toString()), "ether" ) ;          
         
       } 
 
@@ -170,8 +203,8 @@ const Swap = () => {
         const accounts =  await web3.eth.getAccounts(); 
         document.getElementById("tid1").value = false;    
         var seventyfive=(cbusdbalance * 75)/100;
-        setdepositpercent(Number((seventyfive/1000000000000000000).toString().match(/^\d+(?:\.\d{0,3})?/))); 
-        document.getElementById("tid1").value =Number((seventyfive/1000000000000000000).toString().match(/^\d+(?:\.\d{0,3})?/));         
+        setdepositpercent(web3.utils.fromWei((seventyfive.toString()), "ether" )); 
+        document.getElementById("tid1").value =web3.utils.fromWei((seventyfive.toString()), "ether" );         
         
       }
       const balancepercent3 = async(event) => {
@@ -179,8 +212,8 @@ const Swap = () => {
         const accounts =  await web3.eth.getAccounts(); 
         document.getElementById("tid1").value = false;    
         var hundred=(cbusdbalance * 100)/100;
-        setdepositpercent(Number((hundred/1000000000000000000).toString().match(/^\d+(?:\.\d{0,3})?/))); 
-        document.getElementById("tid1").value =  Number((hundred/1000000000000000000).toString().match(/^\d+(?:\.\d{0,3})?/));         
+        setdepositpercent(web3.utils.fromWei((hundred.toString()), "ether" )); 
+        document.getElementById("tid1").value = web3.utils.fromWei((hundred.toString()), "ether" );         
         
       }
 
@@ -190,8 +223,8 @@ const Swap = () => {
         const accounts =  await web3.eth.getAccounts(); 
         document.getElementById("tid2").value = false;  
         var twentyfive=(values[0] * 25)/100;
-        setTotaldeposit(Number((twentyfive/1000000000000000000).toString().match(/^\d+(?:\.\d{0,3})?/)));
-        document.getElementById("tid2").value =Number((twentyfive/1000000000000000000).toString().match(/^\d+(?:\.\d{0,3})?/));        
+        setTotaldeposit(web3.utils.fromWei((twentyfive.toString()), "ether" ));
+        document.getElementById("tid2").value =web3.utils.fromWei((twentyfive.toString()), "ether" );        
         
       }
        const withdrawbalancepercent1 = async(event) => {
@@ -199,8 +232,8 @@ const Swap = () => {
         const accounts =  await web3.eth.getAccounts(); 
         document.getElementById("tid2").value = false;    
         var fifty=(values[0] * 50)/100;
-        setTotaldeposit(Number((fifty/1000000000000000000).toString().match(/^\d+(?:\.\d{0,3})?/)));
-        document.getElementById("tid2").value =Number((fifty/1000000000000000000).toString().match(/^\d+(?:\.\d{0,3})?/));          
+        setTotaldeposit(web3.utils.fromWei((fifty.toString()), "ether" ));
+        document.getElementById("tid2").value =web3.utils.fromWei((fifty.toString()), "ether" );          
         
       } 
 
@@ -210,8 +243,8 @@ const Swap = () => {
         const accounts =  await web3.eth.getAccounts(); 
         document.getElementById("tid2").value = false;    
         var seventyfive=(values[0] * 75)/100;
-        setTotaldeposit(Number((seventyfive/1000000000000000000).toString().match(/^\d+(?:\.\d{0,3})?/))); 
-        document.getElementById("tid2").value =Number((seventyfive/1000000000000000000).toString().match(/^\d+(?:\.\d{0,3})?/));         
+        setTotaldeposit(web3.utils.fromWei((seventyfive.toString()), "ether" )); 
+        document.getElementById("tid2").value =web3.utils.fromWei((seventyfive.toString()), "ether" );         
         
       }
       const withdrawbalancepercent3 = async(event) => {
@@ -219,14 +252,14 @@ const Swap = () => {
         const accounts =  await web3.eth.getAccounts(); 
         document.getElementById("tid2").value = false;    
         var hundred=(values[0] * 100)/100;
-        setTotaldeposit(Number((hundred/1000000000000000000).toString().match(/^\d+(?:\.\d{0,3})?/))); 
-        document.getElementById("tid2").value =Number((hundred/1000000000000000000).toString().match(/^\d+(?:\.\d{0,3})?/));         
+        setTotaldeposit(web3.utils.fromWei((hundred.toString()), "ether" )); 
+        document.getElementById("tid2").value =web3.utils.fromWei((hundred.toString()), "ether" );         
         
       }
       const approve = async() => {
         let account = await web3.eth.getAccounts();
         let amount = 1000000000000000000 +"000000000000000000"; 
-        await cbusd.methods.approve("0x7F53d063E8aB5bde5e262571777ec4BD586Eaa70",amount).send({from:account[0]});
+        await cbusdcontract.methods.approve(contracts.swap.address,amount).send({from:account[0]});
         first()
         setIsOpen(true);
         setDis("Approved Succesfully");
@@ -385,10 +418,10 @@ const Swap = () => {
                                     </thead>
                                     <tbody className="text-center">
                                         <tr>
-                                            <td>{parseFloat(cbusdbalance/1000000000000000000).toFixed(5)}</td>
-                                            <td>{parseFloat(values[0]/1000000000000000000).toFixed(5)}</td>
-                                            <td>{parseFloat(values[2]/1000000000000000000).toFixed(5)}</td>
-                                            <td>{parseFloat(values[3]/1000000000000000000).toFixed(5)}</td>
+                                            <td>{((BigNumber((cbusdbalance/1000000000000000000)).decimalPlaces(3,1))).toNumber()}</td>
+                                            <td>{((BigNumber((values[0]/1000000000000000000)).decimalPlaces(3,1))).toNumber()}</td>
+                                            <td>{((BigNumber((values[2]/1000000000000000000)).decimalPlaces(3,1))).toNumber()}</td>
+                                            <td>{((BigNumber((values[3]/1000000000000000000)).decimalPlaces(3,1))).toNumber()}</td>
                                         </tr>
                                     </tbody>
                                 </Table>
@@ -464,11 +497,11 @@ const Swap = () => {
                                 <div className="content">
                                     <div className="d-flex">
                                         <span>Total Deposited cbUSD:</span>
-                                        <span className="ml-auto">{parseFloat(toalcbusddepo/1000000000000000000).toFixed(5)}</span>
+                                        <span className="ml-auto">{((BigNumber((toalcbusddepo/1000000000000000000)).decimalPlaces(3,1))).toNumber()}</span>
                                     </div>
                                     <div className="d-flex">
                                         <span>Total BUSD Deposited in alpaca:</span>
-                                        <span className="ml-auto">{parseFloat(toalbusdonalpaca/1000000000000000000).toFixed(5)}</span>
+                                        <span className="ml-auto">{((BigNumber((toalbusdonalpaca/1000000000000000000)).decimalPlaces(3,1))).toNumber()}</span>
                                     </div>
                                     {/* <div className="d-flex">
                                         <span>Estimated BUSD Daily Yield:</span>
@@ -476,7 +509,7 @@ const Swap = () => {
                                     </div> */}
                                     <div className="d-flex">
                                         <span>Total BUSD Available for Stabilization:</span>
-                                        <span className="ml-auto" >{parseFloat(toalbusddepo/1000000000000000000).toFixed(5)}</span>
+                                        <span className="ml-auto" >{((BigNumber((toalbusddepo/1000000000000000000)).decimalPlaces(3,1))).toNumber()}</span>
                                     </div>
                                     {/* <div className="d-flex">
                                         <span>Yearly Stabilization Rate:</span>

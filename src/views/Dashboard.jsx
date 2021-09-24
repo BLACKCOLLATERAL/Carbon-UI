@@ -7,20 +7,24 @@ import icon from "../assets/img/icon.PNG";
 import icon1 from "../assets/img/icon1.PNG";
 import icon3 from "../assets/img/icon3.PNG";
 import Pools from '../components/farming/Pools';
-import cbusd from "./cbusdAbi";
+//import cbusd from "./cbusdAbi";
 import CustomCard from '../components/global/CustomCard';
-import black from "./blackAbi";
-import CFI from "./carbonFinanceAbi";
+//import black from "./blackAbi";
+//import CFI from "./carbonFinanceAbi";
 import web3 from "../web3";
 import Posts from '../components/Posts';
 import Pagination from '../components/Pagination';
-import valutadapter from"./vaultAdapterAbi";
-import carbonoracle from "./carbonOracleAbi";
-import carbonStake from "./carbonStakeAbi";
-import busd from "./busdAbi";
-import cbusdtoken from "./cbusdAbi";
-import cbusdpair from "./lptokenAbi";
+//import valutadapter from"./vaultAdapterAbi";
+//import carbonoracle from "./carbonOracleAbi";
+//import carbonStake from "./carbonStakeAbi";
+//import busd from "./busdAbi";
+//import cbusdtoken from "./cbusdAbi";
+//import cbusdpair from "./lptokenAbi";
 //import black from "./blackabi";
+
+import { contracts } from './contractAddress';
+import {blackabi, cbusd,busd ,cbusdbusdpair,carbonfinance} from './abi';
+
 class Dashboard extends Component {
     state={
         activeTab: "ViewPool",
@@ -68,22 +72,32 @@ class Dashboard extends Component {
     }
 
   
-
+    
+   
     async componentDidMount()
     {
-        document.getElementById("header-title").innerText = "Dashboard";
+        document.getElementById("header-title").innerText = "CARBONIX";        
+        document.getElementById("header-title").style.color = "#f5584b";
+        
        const account = await web3.eth.getAccounts();
-       const totalsupply1 = await cbusd.methods.totalSupply().call();
+
+       const cbusdcontract = new web3.eth.Contract(cbusd, contracts.cbusd.address);
+       const blackcontract = new web3.eth.Contract(blackabi, contracts.black.address);
+       const busdcontract = new web3.eth.Contract(busd, contracts.busd.address);
+       const cbusdbusdpaircontract = new web3.eth.Contract(cbusdbusdpair, contracts.cbusdbusdpair.address);
+       const carbonfinancecontract = new web3.eth.Contract(carbonfinance, contracts.carbonfinance.address);
+
+       const totalsupply1 = await cbusdcontract.methods.totalSupply().call();
        const totalsupply =(parseFloat(totalsupply1/1000000000000000000).toFixed(3));
-       const totaldeposited1 =await CFI.methods.totalDeposited().call();
+       const totaldeposited1 =await carbonfinancecontract.methods.totalDeposited().call();
        //const totaldepositedcarbonpool=await cbusd.methods.balanceOf("0x3a7CD9084072c0178ED6EbACAF1926E2E9e57D43").call()); 
        const totaldeposited =(parseFloat(totaldeposited1/1000000000000000000).toFixed(3));
        //const totalvaluelock1 =await valutadapter.methods.totalValue().call();
-       const totaldepositedcarbonpool1=await cbusdtoken.methods.balanceOf("0xb2690f8851dFa22E7Fc755b0AF697AbD173CF964").call(); 
+       const totaldepositedcarbonpool1=await cbusdcontract.methods.balanceOf(contracts.carbonstake.address).call(); 
        const totaldepositedcarbonpool =(parseFloat(totaldepositedcarbonpool1/1000000000000000000).toFixed(3));
-       const totaldepositedLppool1=await cbusdpair.methods.balanceOf("0x47b58c81DD4b40E277734Ab16071e488b19430a9").call(); 
+       const totaldepositedLppool1=await cbusdbusdpaircontract.methods.balanceOf(contracts.lpstake.address).call(); 
        const totaldepositedLppool =(parseFloat(totaldepositedLppool1/1000000000000000000).toFixed(3));
-       const totaldepositedblackpool1=await black.methods.balanceOf("0x8f40a5c5fE040dBD2B6077f31e6c54DAB6289027").call(); 
+       const totaldepositedblackpool1=await blackcontract.methods.balanceOf(contracts.blackstake.address).call(); 
        const totaldepositedblackpool =(parseFloat(totaldepositedblackpool1/1000000000000000000).toFixed(3));
       // const totalvaluelocked =(parseFloat(((totaldeposited) + (totaldepositedcarbonpool) + (totaldepositedLppool) + (totaldepositedblackpool))).toFixed(3));
        const totalvaluelocked = (parseFloat (totaldeposited) +parseFloat (totaldepositedcarbonpool)) + (parseFloat(totaldepositedLppool) + parseFloat(totaldepositedblackpool));
@@ -91,13 +105,14 @@ class Dashboard extends Component {
        console.log("totaldepositedcarbonpool",totaldepositedcarbonpool);
        console.log("totaldepositedLppool",totaldepositedLppool);
        console.log("totaldepositedblackpool",totaldepositedblackpool);
-
-       const carbonprice1=await  carbonoracle.methods.getDittoBnbRate().call();
-       const carbonprice=(parseFloat((carbonprice1[3])/1000000000).toFixed(11));
-
+       const priceofbusd= await busdcontract.methods.balanceOf(contracts.cbusdbusdpair.address).call();
+       const priceofcbusd= await cbusdcontract.methods.balanceOf(contracts.cbusdbusdpair.address).call();
+       const carbonprice1= (priceofbusd)/(priceofcbusd);
+       const carbonprice=(parseFloat(carbonprice1).toFixed(3));
        console.log("carbonpricecheck",carbonprice);
        this.setState({setLoading:true});
-       const response = await fetch("https://api-testnet.bscscan.com/api?module=account&action=tokentx&address=0x27A8DE88408102b4C14c1DbB1695a666A8686e6a&startblock=0&endblock=250000000000&sort=desc&apikey=YourApiKeyToken");
+       if(localStorage.getItem("wallet")>0){
+       const response = await fetch("https://api.bscscan.com/api?module=account&action=tokentx&address=0x238B7EBb221A307bd2a99bcDc6C169899733dce9&startblock=0&endblock=250000000000&sort=desc&apikey=YourApiKeyToken");
        const data = await response.json();
        console.log("data",data);
         //var assign= data.result; 
@@ -146,8 +161,7 @@ class Dashboard extends Component {
         //this.setState({setcount:count1});
         
 
-       this.setState({totalsupply,totaldeposited,totalvaluelocked}); 
-       this.setState({carbonprice});
+     
        //this.setState({carbonprice:await  carbonoracle.methods.getDittoBnbRate().call()});
        
        this.state.datas.map((a)=>{            
@@ -168,7 +182,7 @@ class Dashboard extends Component {
            console.log("filterddata",filtdata);  
            this.setState({setfiltdata:filtdata}) 
 
-           const filtdata2=data.result.filter((a)=>parseInt(a.from)===parseInt("0x27A8DE88408102b4C14c1DbB1695a666A8686e6a"));
+           const filtdata2=data.result.filter((a)=>parseInt(a.from)===parseInt(contracts.carbonfinance.address));
            console.log("filterddata2",filtdata2);  
            this.setState({setfiltdata2:filtdata2}) 
         //    this.setState({cart: [this.state.filtdata, this.state.input]});
@@ -176,6 +190,9 @@ class Dashboard extends Component {
         const filtdata3=filtdata2.filter((a)=>parseInt(a.to)===this.state.setad);
         console.log("filterddata3",filtdata3);  
         this.setState({setfiltdata3:filtdata3}) 
+    }
+    this.setState({totalsupply,totaldeposited,totalvaluelocked}); 
+     this.setState({carbonprice});
     } 
    
  
@@ -204,7 +221,7 @@ class Dashboard extends Component {
                     <CustomCard title="Total Deposited" title2="$" text= {this.state.totaldeposited}></CustomCard>
                 </Col>
                 <Col className="mb-4">
-                    <CustomCard title="Total cbUSD Borrowed" text={this.state.totalsupply}/>
+                    <CustomCard title="Total cbUSD Borrowed" text={this.state.totalsupply} />
                 </Col>
                 <Col className="mb-4">
                     <CustomCard title="cbUSD Circulating Supply" text={this.state.totalsupply} />
@@ -313,7 +330,7 @@ class Dashboard extends Component {
                                      <div className="pl-2 pr-2">
                                          
                                          {
-                                             a.from === "0x27A8DE88408102b4C14c1DbB1695a666A8686e6a" ?(
+                                             a.from === contracts.carbonfinance.address ?(
                                                  
                                              <h6 style={{ fontWeight: "600" }}>withdraw</h6>):
                                              (
@@ -442,10 +459,10 @@ class Dashboard extends Component {
                                       />
                                       <div className="pl-2 pr-2">
                                           {
-                                              a.from === "0x27A8DE88408102b4C14c1DbB1695a666A8686e6a" ?(
-                                              <h6 style={{ fontWeight: "600" }}>withdraw</h6>):
+                                              a.from === contracts.carbonfinance.address ?(
+                                              <h6 style={{ fontWeight: "600" }}>Deposit</h6>):
                                               (
-                                            <h6 style={{ fontWeight: "600" }}>Deposit</h6>
+                                            <h6 style={{ fontWeight: "600" }}>Withdraw</h6>
                                               )
                                           }
                                           {/* <h6 style={{ fontWeight: "600" }}></h6> */}
