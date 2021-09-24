@@ -23,7 +23,7 @@ const Vault = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [dropdownOpen1, setDropdownOpen1] = useState(false);
     const [multiple, setMultiple] = useState(false);
-    const [selectedDropdown, setSelectedDropdown] = useState("cBUSD");
+    const [selectedDropdown, setSelectedDropdown] = useState("cbUSD");
     const [selectedDropdown1, setSelectedDropdown1] = useState("NO TRANCHE");
     const toggleDropDown = () => setDropdownOpen(!dropdownOpen);
     const toggle1 = () => setDropdownOpen1(!dropdownOpen1);
@@ -165,7 +165,7 @@ const Vault = () => {
         const accounts =  await web3.eth.getAccounts();
         var valu = document.getElementById("tid4").value;
        console.log("valuepre",valu);
-        if(selectedDropdown == "cBUSD"){
+        if(selectedDropdown == "cbUSD"){
         var val = valu * 1000000000;
         var value = val * 1000000000;
         console.log("valuecheck",value);
@@ -183,11 +183,11 @@ const Vault = () => {
             await carbonfinancecontract.methods.repay(0,web3.utils.toBN(value)).send({from:accounts[0]});
             overall()
             setIsOpen(true);
-            setDis("Borrowed amount is repayed By using CBUSD")
+            setDis("Borrowed amount is repayed By using cbUSD")
         }
         else{
             setIsOpen(true);
-            setDis("You Don't Have Enough cBUSD To Repay Your Debt")
+            setDis("You Don't Have Enough cbUSD To Repay Your Debt")
         }
     }
        }
@@ -611,7 +611,7 @@ const Vault = () => {
                                            
 
     <div>
-                                <h6>Deposit BUSD in order to borrow cBUSD</h6>
+                                <h6>Deposit BUSD in order to borrow cbUSD</h6>
                                     <InputGroup className="mt-3">
                                         {/* <Input placeholder={depositpercent} style={{ height: "auto" }} type = "number" name="tid1"  onChange={event => setId1( event.target.value)}  ></Input> */}
                                         <Input placeholder={{depositpercent},"0.00" }style={{ height: "auto" }} type = "number" id="tid1"  ></Input>
@@ -649,24 +649,24 @@ const Vault = () => {
                                     <div className="mt-4">
                                         <h5>Borrows</h5>
                                         <div className="d-flex">
-                                            <span>Remaining cBUSD debt:</span>
-                                            <span className="ml-auto">0.00 cBUSD</span>
+                                            <span>Remaining cbUSD debt:</span>
+                                            <span className="ml-auto">0.00 cbUSD</span>
                                         </div>
                                         <div className="d-flex">
                                             <span>Available to borrow:</span>
-                                            <span className="ml-auto">0.00 cBUSD</span>
+                                            <span className="ml-auto">0.00 cbUSD</span>
                                         </div>
                                         <div className="d-flex">
                                             <span>Your wallet balance:</span>
-                                            <span className="ml-auto">0.00 cBUSD</span>
+                                            <span className="ml-auto">0.00 cbUSD</span>
                                         </div>
                                         {/* <div className="d-flex">
                                             <span>Est. Date of Maturity:</span>
                                             <span className="ml-auto">...</span>
                                         </div> */}
                                         <div className="d-flex">
-                                            <span>Global Mintable cBUSD:</span>
-                                            <span className="ml-auto">0.00 cBUSD</span>
+                                            <span>Global Mintable cbUSD:</span>
+                                            <span className="ml-auto">0.00 cbUSD</span>
                                         </div>
                                     </div>
 
@@ -707,24 +707,24 @@ const Vault = () => {
                                     <div className="mt-4">
                                         <h5>Borrows</h5>
                                         <div className="d-flex">
-                                            <span>Remaining cBUSD debt:</span>
-                                            <span className="ml-auto">0.00 cBUSD</span>
+                                            <span>Remaining cbUSD debt:</span>
+                                            <span className="ml-auto">0.00 cbUSD</span>
                                         </div>
                                         <div className="d-flex">
                                             <span>Available to borrow:</span>
-                                            <span className="ml-auto">0.00 cBUSD</span>
+                                            <span className="ml-auto">0.00 cbUSD</span>
                                         </div>
                                         <div className="d-flex">
                                             <span>Your wallet balance:</span>
-                                            <span className="ml-auto">0.00 cBUSD</span>
+                                            <span className="ml-auto">0.00 cbUSD</span>
                                         </div>
                                         {/* <div className="d-flex">
                                             <span>Est. Date of Maturity:</span>
                                             <span className="ml-auto">...</span>
                                         </div> */}
                                         <div className="d-flex">
-                                            <span>Global Mintable cBUSD:</span>
-                                            <span className="ml-auto">0.00 cBUSD</span>
+                                            <span>Global Mintable cbUSD:</span>
+                                            <span className="ml-auto">0.00 cbUSD</span>
                                         </div>
                                     </div>
 
