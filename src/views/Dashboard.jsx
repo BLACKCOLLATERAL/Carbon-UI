@@ -212,19 +212,19 @@ class Dashboard extends Component {
         return (<>
             <Row lg="8" xs="3" className="m-5">
                 <Col className="mb-4">
-                    <CustomCard title="TOTAL VALUE LOCKED"  title2="$"  text={this.state.totalvaluelocked}/>
+                    <CustomCard titledashboard="TOTAL VALUE LOCKED"  title2="$"  text={this.state.totalvaluelocked}/>
                 </Col>
                 <Col className="mb-4">
-                    <CustomCard title="Carbon price"  title2="$" text={this.state.carbonprice}/>
+                    <CustomCard titledashboard="CARBON PRICE"  title2="$" text={this.state.carbonprice}/>
                 </Col>
                 <Col className="mb-4">
-                    <CustomCard title="Total Deposited" title2="$" text= {this.state.totaldeposited}></CustomCard>
+                    <CustomCard titledashboard="TOTAL DEPOSITED" title2="$" text= {this.state.totaldeposited}></CustomCard>
                 </Col>
                 <Col className="mb-4">
-                    <CustomCard title="Total cbUSD Borrowed" text={this.state.totalsupply} />
+                    <CustomCard titledashboard="TOTAL cbUSD BORROWED" text={this.state.totalsupply} />
                 </Col>
                 <Col className="mb-4">
-                    <CustomCard title="cbUSD Circulating Supply" text={this.state.totalsupply} />
+                    <CustomCard titledashboard="cbUSD CIRCULATING SUPPLY" text={this.state.totalsupply} />
                 </Col>
             </Row>
             <div className="m-5 pl-3"><h2><b>Pools</b></h2>
@@ -361,16 +361,16 @@ class Dashboard extends Component {
                                      <h6 style={{ fontWeight: "600" }}>{a.from.slice(0,32)}</h6>
                                  </Link> */}
                                            <Link>
-                                             <h6 style={{cursor:"pointer", fontWeight: "600" }} onClick={e => window.open("https://testnet.bscscan.com/address/"+a.from)}>{a.from.slice(0,32)}</h6>
+                                             <h6 style={{cursor:"pointer", fontWeight: "600" }} onClick={e => window.open("https://bscscan.com/address/"+a.from)}>{a.from.slice(0,32)}</h6>
                                              </Link>
                              </td>
                              <td>
                                  <div className="d-flex justify-content-left">
                                      <div className=" align-items-baseline">
-                                         {/* <Link to={"https://testnet.bscscan.com/tx/"+a.hash}> */}
+                                         {/* <Link to={"https://bscscan.com/tx/"+a.hash}> */}
                                              {/* <h6 style={{ fontWeight: "600" }}>{a.hash.slice(0,32)}</h6> */}
                                              <Link>
-                                             <h6 style={{cursor:"pointer", fontWeight: "600" }} onClick={e => window.open("https://testnet.bscscan.com/tx/"+a.hash)}>{a.hash.slice(0,32)}</h6>
+                                             <h6 style={{cursor:"pointer", fontWeight: "600" }} onClick={e => window.open("https://bscscan.com/tx/"+a.hash)}>{a.hash.slice(0,32)}</h6>
                                              </Link>
                                          {/* </Link>                        */}
                                           <div
@@ -489,16 +489,16 @@ class Dashboard extends Component {
                                       <h6 style={{ fontWeight: "600" }}>{a.from.slice(0,32)}</h6>
                                   </Link> */}
                                             <Link>
-                                              <h6 style={{cursor:"pointer", fontWeight: "600" }} onClick={e => window.open("https://testnet.bscscan.com/address/"+a.from)}>{a.from.slice(0,32)}</h6>
+                                              <h6 style={{cursor:"pointer", fontWeight: "600" }} onClick={e => window.open("https://bscscan.com/address/"+a.from)}>{a.from.slice(0,32)}</h6>
                                               </Link>
                               </td>
                               <td>
                                   <div className="d-flex justify-content-left">
                                       <div className=" align-items-baseline">
-                                          {/* <Link to={"https://testnet.bscscan.com/tx/"+a.hash}> */}
+                                          {/* <Link to={"https://bscscan.com//tx/"+a.hash}> */}
                                               {/* <h6 style={{ fontWeight: "600" }}>{a.hash.slice(0,32)}</h6> */}
                                               <Link>
-                                              <h6 style={{cursor:"pointer", fontWeight: "600" }} onClick={e => window.open("https://testnet.bscscan.com/tx/"+a.hash)}>{a.hash.slice(0,32)}</h6>
+                                              <h6 style={{cursor:"pointer", fontWeight: "600" }} onClick={e => window.open("https://bscscan.com/tx/"+a.hash)}>{a.hash.slice(0,32)}</h6>
                                               </Link>
                                           {/* </Link>                        */}
                                            <div
