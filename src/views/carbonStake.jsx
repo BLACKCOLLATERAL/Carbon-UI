@@ -11,7 +11,7 @@ import Popup from "../Popup";
 import Modald from "../ModalD";
 import FolowStepsd from "../FolowStepsd";
 import BigNumber from "bignumber.js";
-
+import FolowStepsdcopy from "../FolowStepsdcopy";
 import { contracts } from './contractAddress';
 import {blackabi, cbusdstake,cbusd, carbonstake } from './abi';
 const Cbusdstake = () => {
@@ -19,7 +19,7 @@ const Cbusdstake = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [dropdownOpen1, setDropdownOpen1] = useState(false);
     const [multiple, setMultiple] = useState(false);
-    const [selectedDropdown, setSelectedDropdown] = useState("cBUSD");
+    const [selectedDropdown, setSelectedDropdown] = useState("cbUSD");
     const [selectedDropdown1, setSelectedDropdown1] = useState("No Yield");
     const[tid,setId] = useState("");
     const[tid1,setId1] = useState("");
@@ -48,6 +48,7 @@ const Cbusdstake = () => {
     const toggle1 = () => setDropdownOpen1(!dropdownOpen1);
     let history = useHistory();
     const [isOpen, setIsOpen] = useState(false);
+    const [isOpens, setIsOpens] = useState(false);
     var[dis,setDis] = useState("");
     const[stakeenddate,setStakeendDate]=useState('');
     const cbusdcontract = new web3.eth.Contract(cbusd, contracts.cbusd.address);
@@ -57,7 +58,7 @@ const Cbusdstake = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             var  currentdate=(new Date().getTime())/1000;
-            var enddatediff =1632491910-currentdate;
+            var enddatediff = 1635156735-currentdate;
             if(enddatediff>0){
                 setStakeendDate(1);
         
@@ -215,14 +216,14 @@ const Cbusdstake = () => {
                 first();
             }
             else{
-                setIsOpen(true);
+                setIsOpens(true);
                 setDis("you are trying to stake morethan your stake limit")
                 first();
             }
         
     }
     else{
-        setIsOpen(true);
+        setIsOpens(true);
         setDis("You Are Trying To Stake More Than Your Wallet Balance")
     }
       }
@@ -243,7 +244,7 @@ const Cbusdstake = () => {
             first()
         }
         else{
-            setIsOpen(true);
+            setIsOpens(true);
             setDis("You Are Trying To UnStake More Than You Staked")
         }
       }  
@@ -257,7 +258,7 @@ const Cbusdstake = () => {
             setDis("Rewards Claimed Successfully")   
         }
         else{
-            setIsOpen(true);
+            setIsOpens(true);
             setDis("Your reward amount should be Greater then 100 to Claim ")
         }
            
@@ -379,6 +380,10 @@ const Cbusdstake = () => {
   <Modald visible={isOpen} onClose={() => setIsOpen(false)}>
         <FolowStepsd viewhistory={dis}  />
       </Modald>
+
+      <Modald visible={isOpens} onClose={() => setIsOpens(false)}>
+        <FolowStepsdcopy viewhistory={dis}  />
+      </Modald>
              {
             localStorage.getItem("wallet")===null || localStorage.getItem("wallet")===""?(<>
             <Container fluid>
@@ -386,13 +391,13 @@ const Cbusdstake = () => {
                     <Col xl="8" lg="8" md="10" sm="12">
                         <Card className="custom-card">
                             <div className="p-3">
-                                <h4>stake  cBUSD </h4>
-                                <h6>The Stake cBUSD and get Black token as reward</h6>
+                                <h4>stake  cbUSD </h4>
+                                <h6>The Stake cbUSD and get Black token as reward</h6>
                                 <Table bordered responsive className="mt-3">
                                     <thead>
                                         <tr>
-                                            <th>Your cBUSD</th>
-                                            <th>Staked cBUSD</th>
+                                            <th>Your cbUSD</th>
+                                            <th>Staked cbUSD</th>
                                             <th>Remaining Amount to Stake </th>
                                             <th>Black reward</th>
                                             <th>Your Black</th>
@@ -481,13 +486,13 @@ const Cbusdstake = () => {
                     <Col xl="8" lg="8" md="10" sm="12">
                         <Card className="custom-card">
                             <div className="p-3">
-                                <h4>stake  cBUSD </h4>
-                                <h6>The Stake cBUSD and get Black token as reward</h6>
+                                <h4>stake  cbUSD </h4>
+                                <h6>The Stake cbUSD and get Black token as reward</h6>
                                 <Table bordered responsive className="mt-3">
                                     <thead>
                                         <tr>
-                                            <th>Your cBUSD</th>
-                                            <th>Staked cBUSD</th>
+                                            <th>Your cbUSD</th>
+                                            <th>Staked cbUSD</th>
                                             <th>Remaining Amount to Stake </th>
                                             <th>Black reward</th>
                                             <th>Your Black</th>

@@ -11,6 +11,7 @@ import web3 from "../web3";
 //import busd from "./busdAbi";
 import Modald from "../ModalD";
 import FolowStepsd from "../FolowStepsd";
+import FolowStepsdcopy from "../FolowStepsdcopy";
 import BigNumber from 'bignumber.js';
 //import styles from ".././FolowSteps.module.sass";
 
@@ -40,6 +41,7 @@ const Swap = () => {
     const toggle1 = () => setDropdownOpen1(!dropdownOpen1);
     let history = useHistory();
     const [isOpen, setIsOpen] = useState(false);
+    const [isOpens, setIsOpens] = useState(false);
     var[dis,setDis] = useState("");
     
     const swapcontract = new web3.eth.Contract(swap, contracts.swap.address);
@@ -108,7 +110,7 @@ else{
             setDis("Deposited succesfully");
         }
         else{
-            setIsOpen(true);        
+            setIsOpens(true);        
             setDis("You Are Trying To Deposit More Than Your Wallet Balance");
         }
        
@@ -134,7 +136,7 @@ else{
         }
 
         else{
-            setIsOpen(true);
+            setIsOpens(true);
             setDis("You Are Trying To Withdraw More Than You Deposited")
         }
        
@@ -152,7 +154,7 @@ else{
         }
         else{
             first()
-            setIsOpen(true);
+            setIsOpens(true);
           setDis("You don't have Stabilizable BUSD ")
         }
        
@@ -170,7 +172,7 @@ else{
     
         else{
             first()
-            setIsOpen(true);
+            setIsOpens(true);
           setDis("You dont have enough Base Token")
         }
         
@@ -283,6 +285,10 @@ else{
   </div>              */}
   <Modald visible={isOpen} onClose={() => setIsOpen(false)}>
         <FolowStepsd viewhistory={dis}  />
+      </Modald>
+
+      <Modald visible={isOpens} onClose={() => setIsOpens(false)}>
+        <FolowStepsdcopy viewhistory={dis}  />
       </Modald>
              {
 

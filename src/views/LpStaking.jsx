@@ -10,6 +10,7 @@ import web3 from "../web3";
 //import lppair from "./lptokenAbi";
 import Modald from "../ModalD";
 import FolowStepsd from "../FolowStepsd";
+import FolowStepsdcopy from "../FolowStepsdcopy";
 import BigNumber from "bignumber.js";
 
 
@@ -48,6 +49,7 @@ const Lpstake = () => {
     const[stakelock,setStakeLock]=useState("");
     const [Remainingamount ,setRemainingamount]=useState(""); 
     const [isOpen, setIsOpen] = useState(false);
+    const [isOpens, setIsOpens] = useState(false);
     var[dis,setDis] = useState("");
     const[stakeenddate,setStakeendDate]=useState('');
     const toggleDropDown = () => setDropdownOpen(!dropdownOpen);
@@ -60,7 +62,7 @@ const Lpstake = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             var  currentdate=(new Date().getTime())/1000;
-            var enddatediff =1632491910-currentdate;
+            var enddatediff = 1635156735-currentdate;
             if(enddatediff>0){
                 setStakeendDate(1);
         
@@ -211,14 +213,14 @@ const Lpstake = () => {
                 first();
             }
             else{
-                setIsOpen(true);
+                setIsOpens(true);
                 setDis("you are trying to stake morethan your stake limit")
                 first();
             }
             
         }
         else{
-            setIsOpen(true);
+            setIsOpens(true);
             setDis("You Are Trying To Stake More Than Your Wallet Balance")
         }
         
@@ -240,7 +242,7 @@ const Lpstake = () => {
             first()
         }
         else{
-            setIsOpen(true);
+            setIsOpens(true);
             setDis("You Are Trying To Stake More Than You Deposited")
         }
         
@@ -255,7 +257,7 @@ const Lpstake = () => {
             setDis("Rewards Claimed Successfully") 
         }
         else{
-            setIsOpen(true);
+            setIsOpens(true);
             setDis("Your reward amount should be Greater then 100 to Claim ")
         }
            
@@ -367,6 +369,9 @@ const Lpstake = () => {
         <section className="p-0 my-5">
             <Modald visible={isOpen} onClose={() => setIsOpen(false)}>
         <FolowStepsd viewhistory={dis}  />
+      </Modald>
+      <Modald visible={isOpens} onClose={() => setIsOpens(false)}>
+        <FolowStepsdcopy viewhistory={dis}  />
       </Modald>
           {
             localStorage.getItem("wallet")===null || localStorage.getItem("wallet")===""?(<>

@@ -10,6 +10,7 @@ import { useDebugValue } from "react";
 import Popup from "../Popup";
 import Modald from "../ModalD";
 import FolowStepsd from "../FolowStepsd";
+import FolowStepsdcopy from "../FolowStepsdcopy";
 import BigNumber from 'bignumber.js';
 
 import { contracts } from './contractAddress';
@@ -23,7 +24,7 @@ const Vault = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [dropdownOpen1, setDropdownOpen1] = useState(false);
     const [multiple, setMultiple] = useState(false);
-    const [selectedDropdown, setSelectedDropdown] = useState("cBUSD");
+    const [selectedDropdown, setSelectedDropdown] = useState("cbUSD");
     const [selectedDropdown1, setSelectedDropdown1] = useState("NO TRANCHE");
     const toggleDropDown = () => setDropdownOpen(!dropdownOpen);
     const toggle1 = () => setDropdownOpen1(!dropdownOpen1);
@@ -41,6 +42,7 @@ const Vault = () => {
     var[app1,setApp] = useState("");
     var[ap1,setAP] = useState(""); 
     const [isOpen, setIsOpen] = useState(false);
+    const [isOpens, setIsOpens] = useState(false);
     var[dis,setDis] = useState("");
     
 
@@ -115,7 +117,7 @@ const Vault = () => {
         setDis("Deposited Succesfully!")
         }
         else{
-            setIsOpen(true);
+            setIsOpens(true);
             setDis("You Are  Trying To Deposit More Than Your Wallet Balance")   
         }
       }
@@ -135,7 +137,7 @@ const Vault = () => {
         setDis("Withdrawn Succesfully!")
         }
         else{
-            setIsOpen(true);
+            setIsOpens(true);
             setDis("You Are Trying To Withdraw More Than You Deposited")   
         }
     }
@@ -156,7 +158,7 @@ const Vault = () => {
         setDis("Borrowed Succesfully!");
        }
        else{
-        setIsOpen(true);
+        setIsOpens(true);
         setDis("You Are Trying To Borrow More Than Your Borrow Limit")   
        }
     }
@@ -165,7 +167,7 @@ const Vault = () => {
         const accounts =  await web3.eth.getAccounts();
         var valu = document.getElementById("tid4").value;
        console.log("valuepre",valu);
-        if(selectedDropdown == "cBUSD"){
+        if(selectedDropdown == "cbUSD"){
         var val = valu * 1000000000;
         var value = val * 1000000000;
         console.log("valuecheck",value);
@@ -174,7 +176,7 @@ const Vault = () => {
        //var value = x.toNumber();
         if(parseInt(value)>parseInt(totaldebt))
         {  overall()
-            setIsOpen(true);
+            setIsOpens(true);
             setDis("You are trying to repay more than your debt ")   
         }
         else{
@@ -183,11 +185,11 @@ const Vault = () => {
             await carbonfinancecontract.methods.repay(0,web3.utils.toBN(value)).send({from:accounts[0]});
             overall()
             setIsOpen(true);
-            setDis("Borrowed amount is repayed By using CBUSD")
+            setDis("Borrowed amount is repayed By using cbUSD")
         }
         else{
-            setIsOpen(true);
-            setDis("You Don't Have Enough cBUSD To Repay Your Debt")
+            setIsOpens(true);
+            setDis("You Don't Have Enough cbUSD To Repay Your Debt")
         }
     }
        }
@@ -199,7 +201,7 @@ const Vault = () => {
     //    var value = x.toNumber();
         if(parseInt(value)>parseInt(totaldebt))
         {  overall()
-            setIsOpen(true);
+            setIsOpens(true);
             setDis("You are trying to repay more than your debt ")   
         }
         else{
@@ -211,7 +213,7 @@ const Vault = () => {
         setDis("Borrowed amount is repayed By using BUSD")
         }
         else{
-            setIsOpen(true);
+            setIsOpens(true);
             setDis("You Don't Have Enough BUSD To Repay Your Debt")
         }
     }
@@ -235,7 +237,7 @@ const Vault = () => {
             setDis("Liquidated Succesfully!")
         }
          else{
-            setIsOpen(true);
+            setIsOpens(true);
             setDis("You Don't Have Enough BUSD In Collateral Balance To Liquidate")
          }
        
@@ -551,6 +553,9 @@ const Vault = () => {
            <Modald visible={isOpen} onClose={() => setIsOpen(false)}>
         <FolowStepsd viewhistory={dis}  />
       </Modald>
+      <Modald visible={isOpens} onClose={() => setIsOpens(false)}>
+        <FolowStepsdcopy viewhistory={dis}  />
+      </Modald>
             <Container fluid>
             {
             localStorage.getItem("wallet")===null || localStorage.getItem("wallet")===""?(<>
@@ -611,7 +616,7 @@ const Vault = () => {
                                            
 
     <div>
-                                <h6>Deposit BUSD in order to borrow cBUSD</h6>
+                                <h6>Deposit BUSD in order to borrow cbUSD</h6>
                                     <InputGroup className="mt-3">
                                         {/* <Input placeholder={depositpercent} style={{ height: "auto" }} type = "number" name="tid1"  onChange={event => setId1( event.target.value)}  ></Input> */}
                                         <Input placeholder={{depositpercent},"0.00" }style={{ height: "auto" }} type = "number" id="tid1"  ></Input>
@@ -649,24 +654,24 @@ const Vault = () => {
                                     <div className="mt-4">
                                         <h5>Borrows</h5>
                                         <div className="d-flex">
-                                            <span>Remaining cBUSD debt:</span>
-                                            <span className="ml-auto">0.00 cBUSD</span>
+                                            <span>Remaining cbUSD debt:</span>
+                                            <span className="ml-auto">0.00 cbUSD</span>
                                         </div>
                                         <div className="d-flex">
                                             <span>Available to borrow:</span>
-                                            <span className="ml-auto">0.00 cBUSD</span>
+                                            <span className="ml-auto">0.00 cbUSD</span>
                                         </div>
                                         <div className="d-flex">
                                             <span>Your wallet balance:</span>
-                                            <span className="ml-auto">0.00 cBUSD</span>
+                                            <span className="ml-auto">0.00 cbUSD</span>
                                         </div>
                                         {/* <div className="d-flex">
                                             <span>Est. Date of Maturity:</span>
                                             <span className="ml-auto">...</span>
                                         </div> */}
                                         <div className="d-flex">
-                                            <span>Global Mintable cBUSD:</span>
-                                            <span className="ml-auto">0.00 cBUSD</span>
+                                            <span>Global Mintable cbUSD:</span>
+                                            <span className="ml-auto">0.00 cbUSD</span>
                                         </div>
                                     </div>
 
@@ -707,24 +712,24 @@ const Vault = () => {
                                     <div className="mt-4">
                                         <h5>Borrows</h5>
                                         <div className="d-flex">
-                                            <span>Remaining cBUSD debt:</span>
-                                            <span className="ml-auto">0.00 cBUSD</span>
+                                            <span>Remaining cbUSD debt:</span>
+                                            <span className="ml-auto">0.00 cbUSD</span>
                                         </div>
                                         <div className="d-flex">
                                             <span>Available to borrow:</span>
-                                            <span className="ml-auto">0.00 cBUSD</span>
+                                            <span className="ml-auto">0.00 cbUSD</span>
                                         </div>
                                         <div className="d-flex">
                                             <span>Your wallet balance:</span>
-                                            <span className="ml-auto">0.00 cBUSD</span>
+                                            <span className="ml-auto">0.00 cbUSD</span>
                                         </div>
                                         {/* <div className="d-flex">
                                             <span>Est. Date of Maturity:</span>
                                             <span className="ml-auto">...</span>
                                         </div> */}
                                         <div className="d-flex">
-                                            <span>Global Mintable cBUSD:</span>
-                                            <span className="ml-auto">0.00 cBUSD</span>
+                                            <span>Global Mintable cbUSD:</span>
+                                            <span className="ml-auto">0.00 cbUSD</span>
                                         </div>
                                     </div>
 
