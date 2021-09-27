@@ -120,7 +120,7 @@ const Pools = () => {
         setBlackStaked(await blackstakecontract.methods.userInfo(accounts[0]).call());
     }
      }
-     useEffect(()=>{bvb()},[balance,balanceblack,carbonprice,blackprice,stakeenddate,carbonstaked])
+     useEffect(()=>{bvb()},[balance,balanceblack,carbonprice,blackprice,stakeenddate,carbonstaked,lpstaked,blackstaked])
   
     let history=useHistory();
     return (
@@ -351,10 +351,18 @@ const Pools = () => {
                             Your balance
                         </p>
                     </div>
+
                     {/* <small className="text-site-primary font-weight-semi-bold text-uppercase">bond staked</small> */}
                     <div style={{ marginLeft: "auto" }}>
                         <p style={{ fontWeight: "600", textAlign: "center" }}>
-                        {((BigNumber((carbonstaked[0]/1000000000000000000)).decimalPlaces(3,1))).toNumber()}
+                            {localStorage.getItem("wallet")>0 ? (<>
+                            
+                                {((BigNumber((carbonstaked[0]/1000000000000000000)).decimalPlaces(3,1))).toNumber()}
+                            </>):(<>
+                                0.00
+                            
+                            </>)}
+                        
                         </p>
                     </div>
                 </div>
@@ -593,7 +601,12 @@ const Pools = () => {
                     {/* <small className="text-site-primary font-weight-semi-bold text-uppercase">bond staked</small> */}
                     <div style={{ marginLeft: "auto" }}>
                         <p style={{ fontWeight: "600", textAlign: "center" }}>
-                        {((BigNumber((lpstaked[0]/1000000000000000000)).decimalPlaces(3,1))).toNumber()}
+                        {localStorage.getItem("wallet")>0 ?(<>  
+                            {((BigNumber((lpstaked[0]/1000000000000000000)).decimalPlaces(3,1))).toNumber()}
+                        </>):(<>
+                            0.00
+                        </>)}
+                        
                         </p>
                     </div>
                 </div>
@@ -830,7 +843,14 @@ const Pools = () => {
                         {/* <small className="text-site-primary font-weight-semi-bold text-uppercase">bond staked</small> */}
                         <div style={{ marginLeft: "auto" }}>
                             <p style={{ fontWeight: "600", textAlign: "center" }}>
-                            {((BigNumber((blackstaked[0]/1000000000)).decimalPlaces(3,1))).toNumber()}
+                            {localStorage.getItem("wallet")>0 ?(<>
+                                {((BigNumber((blackstaked[0]/1000000000)).decimalPlaces(3,1))).toNumber()}
+                            
+                            </>):(<>
+                            
+                                0.00 
+                            </>)}
+                            
                             </p>
                         </div>
                     </div>

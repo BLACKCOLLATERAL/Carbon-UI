@@ -10,6 +10,7 @@ import { Modal,InputGroup,FormControl } from "react-bootstrap";
 import Popup from "../Popup";
 import Modald from "../ModalD";
 import FolowStepsd from "../FolowStepsd";
+import FolowStepsdcopy from "../FolowStepsdcopy";
 
 
 import { contracts } from './contractAddress';
@@ -24,6 +25,7 @@ const BurnVault = () => {
     const [tid4,setId4] = useState([]);
     const [burn,setburn] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
+    const [isOpens, setIsOpens] = useState(false);
     var[dis,setDis] = useState("");
     const[t11,setTim11 ] = useState("");
     const[t21,setTim21] = useState("");
@@ -183,14 +185,14 @@ const BurnVault = () => {
              bvb();
             }
             else{
-                setIsOpen(true); 
+              setIsOpens(true); 
                 setDis("The amount you entered must be less than the Availabe limit ");
               }
             }
           
           
           else{
-              setIsOpen(true); 
+            setIsOpens(true); 
               setDis("The amount you entered must be less than the Maximum Transcation amount");
           }
       
@@ -259,7 +261,9 @@ const BurnVault = () => {
      <Modald visible={isOpen} onClose={() => setIsOpen(false)}>
         <FolowStepsd viewhistory={dis}  />
       </Modald>
-  
+      <Modald visible={isOpens} onClose={() => setIsOpens(false)}>
+        <FolowStepsdcopy viewhistory={dis}  />
+      </Modald>
         <Row className="m-5">
         {
             localStorage.getItem("wallet")===null || localStorage.getItem("wallet")===""?(<>
@@ -353,8 +357,8 @@ const BurnVault = () => {
 )}
 
 </div>)):((<div>
-
-  <text className="mt-3"  >You Need to wait for deposit till this time </text><br/><br/>
+ <center>
+  <text className="mt-3 text-Black" >YOU NEED TO WAIT FOR DEPOSIT  TILL THIS TIME </text></center><br/>
   <center><Button color="dark"  className="text-center">{t41} Day : {t11} Hrs : {t21} Min : {t31} Sec</Button></center>
 
 

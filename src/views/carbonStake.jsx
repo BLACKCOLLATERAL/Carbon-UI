@@ -11,7 +11,7 @@ import Popup from "../Popup";
 import Modald from "../ModalD";
 import FolowStepsd from "../FolowStepsd";
 import BigNumber from "bignumber.js";
-
+import FolowStepsdcopy from "../FolowStepsdcopy";
 import { contracts } from './contractAddress';
 import {blackabi, cbusdstake,cbusd, carbonstake } from './abi';
 const Cbusdstake = () => {
@@ -48,6 +48,7 @@ const Cbusdstake = () => {
     const toggle1 = () => setDropdownOpen1(!dropdownOpen1);
     let history = useHistory();
     const [isOpen, setIsOpen] = useState(false);
+    const [isOpens, setIsOpens] = useState(false);
     var[dis,setDis] = useState("");
     const[stakeenddate,setStakeendDate]=useState('');
     const cbusdcontract = new web3.eth.Contract(cbusd, contracts.cbusd.address);
@@ -215,14 +216,14 @@ const Cbusdstake = () => {
                 first();
             }
             else{
-                setIsOpen(true);
+                setIsOpens(true);
                 setDis("you are trying to stake morethan your stake limit")
                 first();
             }
         
     }
     else{
-        setIsOpen(true);
+        setIsOpens(true);
         setDis("You Are Trying To Stake More Than Your Wallet Balance")
     }
       }
@@ -243,7 +244,7 @@ const Cbusdstake = () => {
             first()
         }
         else{
-            setIsOpen(true);
+            setIsOpens(true);
             setDis("You Are Trying To UnStake More Than You Staked")
         }
       }  
@@ -257,7 +258,7 @@ const Cbusdstake = () => {
             setDis("Rewards Claimed Successfully")   
         }
         else{
-            setIsOpen(true);
+            setIsOpens(true);
             setDis("Your reward amount should be Greater then 100 to Claim ")
         }
            
@@ -378,6 +379,10 @@ const Cbusdstake = () => {
   </div>   */}
   <Modald visible={isOpen} onClose={() => setIsOpen(false)}>
         <FolowStepsd viewhistory={dis}  />
+      </Modald>
+
+      <Modald visible={isOpens} onClose={() => setIsOpens(false)}>
+        <FolowStepsdcopy viewhistory={dis}  />
       </Modald>
              {
             localStorage.getItem("wallet")===null || localStorage.getItem("wallet")===""?(<>

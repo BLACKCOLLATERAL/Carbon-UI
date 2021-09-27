@@ -78,15 +78,15 @@ class Dashboard extends Component {
     {
         document.getElementById("header-title").innerText = "CARBONIX";        
         document.getElementById("header-title").style.color = "#f5584b";
-        
+            
        const account = await web3.eth.getAccounts();
-
+    
        const cbusdcontract = new web3.eth.Contract(cbusd, contracts.cbusd.address);
        const blackcontract = new web3.eth.Contract(blackabi, contracts.black.address);
        const busdcontract = new web3.eth.Contract(busd, contracts.busd.address);
        const cbusdbusdpaircontract = new web3.eth.Contract(cbusdbusdpair, contracts.cbusdbusdpair.address);
        const carbonfinancecontract = new web3.eth.Contract(carbonfinance, contracts.carbonfinance.address);
-
+       
        const totalsupply1 = await cbusdcontract.methods.totalSupply().call();
        const totalsupply =(parseFloat(totalsupply1/1000000000000000000).toFixed(3));
        const totaldeposited1 =await carbonfinancecontract.methods.totalDeposited().call();
@@ -110,9 +110,17 @@ class Dashboard extends Component {
        const carbonprice1= (priceofbusd)/(priceofcbusd);
        const carbonprice=(parseFloat(carbonprice1).toFixed(3));
        console.log("carbonpricecheck",carbonprice);
+       console.log("carbonfinance address",contracts.carbonfinance.address);
        this.setState({setLoading:true});
        if(localStorage.getItem("wallet")>0){
-       const response = await fetch("https://api.bscscan.com/api?module=account&action=tokentx&address=0x238B7EBb221A307bd2a99bcDc6C169899733dce9&startblock=0&endblock=250000000000&sort=desc&apikey=YourApiKeyToken");
+        let response;
+           if(contracts.carbonfinance.address === null || contracts.carbonfinance.address === "" || contracts.carbonfinance.address === undefined || contracts.carbonfinance.address===" "){
+             response = await fetch("https://api.bscscan.com/api?module=account&action=tokentx&address= 0x238B7EBb221A307bd2a99bcDc6C169899733dce9 &startblock=0&endblock=250000000000&sort=desc&apikey=YourApiKeyToken");
+           }
+           else{
+             response = await fetch("https://api.bscscan.com/api?module=account&action=tokentx&address="+contracts.carbonfinance.address+"&startblock=0&endblock=250000000000&sort=desc&apikey=YourApiKeyToken"); 
+           }
+       
        const data = await response.json();
        console.log("data",data);
         //var assign= data.result; 
