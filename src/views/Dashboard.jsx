@@ -100,7 +100,7 @@ class Dashboard extends Component {
        const totaldepositedblackpool1=await blackcontract.methods.balanceOf(contracts.blackstake.address).call(); 
        const totaldepositedblackpool =(parseFloat(totaldepositedblackpool1/1000000000000000000).toFixed(3));
       // const totalvaluelocked =(parseFloat(((totaldeposited) + (totaldepositedcarbonpool) + (totaldepositedLppool) + (totaldepositedblackpool))).toFixed(3));
-       const totalvaluelocked = (parseFloat (totaldeposited) +parseFloat (totaldepositedcarbonpool)) + (parseFloat(totaldepositedLppool) + parseFloat(totaldepositedblackpool));
+       const totalvaluelocked = ((parseFloat (totaldeposited) +parseFloat (totaldepositedcarbonpool)) + (parseFloat(totaldepositedLppool) + parseFloat(totaldepositedblackpool))).toFixed(3);
       
        console.log("totaldepositedcarbonpool",totaldepositedcarbonpool);
        console.log("totaldepositedLppool",totaldepositedLppool);
