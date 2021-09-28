@@ -431,7 +431,7 @@ const Lpstake = () => {
                                             </InputGroup>
                                            
                                         </>)}
-                                            <InputGroup className="mt-3">
+                                            {/* <InputGroup className="mt-3">
                                                 <Input placeholder={depositpercent} style={{ height: "auto" }}type = "number" id="tid1"  />
                                                 <InputGroupAddon addonType="append"><Button color="site-primary" >stake</Button></InputGroupAddon>
                                             </InputGroup>
@@ -440,7 +440,7 @@ const Lpstake = () => {
                                                 <div className="percentage-item" >50%</div>
                                                 <div className="percentage-item" >75%</div>
                                                 <div className="percentage-item" >100%</div>
-                                            </div>
+                                            </div> */}
                                         </Col>
                                         <Col xl="6" md="12">
                                       

@@ -421,7 +421,7 @@ const Cbusdstake = () => {
                                         {stakeenddate===1 ? (<> 
                                             <InputGroup className="mt-3">
                                                 
-                                                
+                                            <Input placeholder={depositpercent} style={{ height: "auto" }}type = "number" id="tid1"  />
                                                 <InputGroupAddon addonType="append"><Button color="site-primary" style={{ height: "auto" }}>stake</Button></InputGroupAddon>
                                             </InputGroup>
                                             <div className="percentage smaller">
