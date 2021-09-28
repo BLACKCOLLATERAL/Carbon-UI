@@ -125,6 +125,174 @@ const Pools = () => {
     let history=useHistory();
     return (
         <Row className="m-3 m-md-5">
+          {localStorage.getItem("wallet")===null || localStorage.getItem("wallet")==="" ||localStorage.getItem("wallet")==='undefined' ||localStorage.getItem("wallet")===undefined ?(<>
+          
+            <>
+                          <Col xl="4" md="6" className="mb-4">
+
+<Card className="custom-card mt-2 mb-2 ml-0 mr-0 p-2">
+    <div className="d-flex" style={{ padding: "12px" }}>
+        <img
+            className="pool-card-image"
+            src={icon}
+            alt="Card image cap"
+        />
+        {/* <small className="text-site-primary font-weight-semi-bold text-uppercase">bond staked</small> */}
+        <div
+            className=" pl-2 pr-2 align-item-center"
+            style={{
+                marginRight: "10px",
+                marginTop: "auto",
+                marginBottom: "auto",
+            }}
+        >
+            <p style={{ fontWeight: "600", margin: "auto" }}>
+                cbUSD
+            </p>
+        </div>
+    </div>
+    <div style={{ padding: "12px" }}>
+        <PoolCardTabs />
+    </div>
+    <div className="d-flex pl-3 pr-3 mt-2 mb-2">
+        <div
+            style={{
+                marginRight: "auto",
+                marginTop: "auto",
+                marginBottom: "auto",
+            }}
+        >
+            <p
+                style={{ fontWeight: "600", fontSize: "12px" }}
+                className="text-muted"
+            >
+                APR
+            </p>
+        </div>
+        {/* <small className="text-site-primary font-weight-semi-bold text-uppercase">bond staked</small> */}
+        <div style={{ marginLeft: "auto" }}>
+            <p>
+                <img
+                    left
+                    width="15px"
+                    style={{
+                        marginTop: "auto",
+                        marginBottom: "auto",
+                        marginLeft: "10px",
+                        marginRight: "10px",
+                    }}
+                    //   style={{ marginButtom: "auto" }}
+                    src={icon}
+                    alt="Card image cap"
+                />
+                <b>{0.00}%</b>
+            </p>
+        </div>
+    </div>
+    <div className="d-flex  pl-3 pr-3 mt-2 mb-2">
+        <div
+            style={{
+                marginRight: "auto",
+                marginTop: "auto",
+                marginBottom: "auto",
+            }}
+        >
+            <p
+                style={{ fontWeight: "600", fontSize: "12px" }}
+                className="text-muted"
+            >
+                BLACK daily rewards
+            </p>
+        </div>
+        {/* <small className="text-site-primary font-weight-semi-bold text-uppercase">bond staked</small> */}
+        <div style={{ marginLeft: "auto" }}>
+            <p style={{ fontWeight: "600", textAlign: "center" }}>
+                <img
+                    left
+                    width="15px"
+                    //   style={{ marginTop:'auto' , marginBottom:'auto',marginLeft:'10px',marginRight:'10px' }}
+                    //   style={{ marginButtom: "auto" }}
+                    src={"https://blackcollateral.com/wp-content/uploads//2021/05/logo-svg.svg"}
+                    alt="Card image cap"
+                />
+               {0.00}
+               
+            </p>
+        </div>
+    </div>
+    <div className="d-flex  pl-3 pr-3 mt-2 mb-2">
+        <div
+            style={{
+                marginRight: "auto",
+                marginTop: "auto",
+                marginBottom: "auto",
+            }}
+        >
+            <p
+                style={{ fontWeight: "600", fontSize: "12px" }}
+                className="text-muted"
+            >
+                BLACK rewards left
+            </p>
+        </div>
+        {/* <small className="text-site-primary font-weight-semi-bold text-uppercase">bond staked</small> */}
+        <div style={{ marginLeft: "auto" }}>
+            <p style={{ fontWeight: "600", textAlign: "center" }}>
+                <img
+                    left
+                    width="15px"
+                    //   style={{ marginTop:'auto' , marginBottom:'auto',marginLeft:'10px',marginRight:'10px' }}
+                    //   style={{ marginButtom: "auto" }}
+                    src={"https://blackcollateral.com/wp-content/uploads//2021/05/logo-svg.svg"}
+                    alt="Card image cap"
+                />
+                 {parseFloat(communitybalance/1000000000).toFixed(3)}
+            </p>
+        </div>
+    </div>
+    <div className="d-flex  pl-3 pr-3 mt-2 mb-2">
+        <div
+            style={{
+                marginRight: "auto",
+                marginTop: "auto",
+                marginBottom: "auto",
+            }}
+        >
+            <p
+                style={{ fontWeight: "600", fontSize: "12px" }}
+                className="text-muted"
+            >
+                Pool balance
+            </p>
+        </div>
+        {/* <small className="text-site-primary font-weight-semi-bold text-uppercase">bond staked</small> */}
+        <div style={{ marginLeft: "auto" }}>
+            <p style={{ fontWeight: "600", textAlign: "center" }}>
+                <img
+                    left
+                    width="15px"
+                    //   style={{ marginTop:'auto' , marginBottom:'auto',marginLeft:'10px',marginRight:'10px' }}
+                    //   style={{ marginButtom: "auto" }}
+                    src={icon}
+                    alt="Card image cap"
+                />
+               {parseFloat(balance/1000000000000000000).toFixed(3)}
+            </p>
+        </div>
+    </div>
+       
+    <Button  className={`ml-3 mr-3 pb-0 mb-0 mt-2 mb-2
+        `} color="site-primary" width="full" onClick={e => {history.push("/carbon-stake")}}><b>View pool</b></Button> 
+</Card>
+</Col>
+                
+                </>
+     
+          
+          
+          
+          </>):(<>
+           
             {stakeenddate===1 ? (
                 <>
                           <Col xl="4" md="6" className="mb-4">
@@ -373,7 +541,171 @@ const Pools = () => {
         
              </>
             ) }
+           </> )}
+
+   {localStorage.getItem("wallet")===null || localStorage.getItem("wallet")==="" ||localStorage.getItem("wallet")==='undefined' ||localStorage.getItem("wallet")===undefined ?(<>
+   
+    <>
+                   <Col xl="4" md="6" className="mb-4">
+                <Card className="custom-card mt-2 mb-2 ml-0 mr-0 p-2">
+                    <div className="d-flex" style={{ padding: "12px" }}>
+                        <img
+                            className="pool-card-image"
+                            src={icon1}
+                            alt="Card image cap"
+                        />
+                        {/* <small className="text-site-primary font-weight-semi-bold text-uppercase">bond staked</small> */}
+                        <div
+                            className=" pl-2 pr-2 align-item-center"
+                            style={{
+                                marginRight: "10px",
+                                marginTop: "auto",
+                                marginBottom: "auto",
+                            }}
+                        >
+                            <p style={{ fontWeight: "600", margin: "auto" }}>
+                                cbUSD/BUSD
+                            </p>
+                        </div>
+                    </div>
+                    <div style={{ padding: "12px" }}>
+                        <PoolCardTabs />
+                    </div>
+                    <div className="d-flex pl-3 pr-3 mt-2 mb-2">
+                        <div
+                            style={{
+                                marginRight: "auto",
+                                marginTop: "auto",
+                                marginBottom: "auto",
+                            }}
+                        >
+                            <p
+                                style={{ fontWeight: "600", fontSize: "12px" }}
+                                className="text-muted"
+                            >
+                                APR
+                            </p>
+                        </div>
+                        {/* <small className="text-site-primary font-weight-semi-bold text-uppercase">bond staked</small> */}
+                        <div style={{ marginLeft: "auto" }}>
+                            <p>
+                                <img
+                                    left
+                                    width="15px"
+                                    style={{
+                                        marginTop: "auto",
+                                        marginBottom: "auto",
+                                        marginLeft: "10px",
+                                        marginRight: "10px",
+                                    }}
+                                    //   style={{ marginButtom: "auto" }}
+                                    src={icon}
+                                    alt="Card image cap"
+                                />
+                                <b>{0.00}%</b>
+                            </p>
+                        </div>
+                    </div>
+                    <div className="d-flex  pl-3 pr-3 mt-2 mb-2">
+                        <div
+                            style={{
+                                marginRight: "auto",
+                                marginTop: "auto",
+                                marginBottom: "auto",
+                            }}
+                        >
+                            <p
+                                style={{ fontWeight: "600", fontSize: "12px" }}
+                                className="text-muted"
+                            >
+                                BLACK daily rewards
+                            </p>
+                        </div>
+                        {/* <small className="text-site-primary font-weight-semi-bold text-uppercase">bond staked</small> */}
+                        <div style={{ marginLeft: "auto" }}>
+                            <p style={{ fontWeight: "600", textAlign: "center" }}>
+                                <img
+                                    left
+                                    width="15px"
+                                    //   style={{ marginTop:'auto' , marginBottom:'auto',marginLeft:'10px',marginRight:'10px' }}
+                                    //   style={{ marginButtom: "auto" }}
+                                    src={"https://blackcollateral.com/wp-content/uploads//2021/05/logo-svg.svg"}
+                                    alt="Card image cap"
+                                />
+                                {0.00}
+                            </p>
+                        </div>
+                    </div>
+                    <div className="d-flex  pl-3 pr-3 mt-2 mb-2">
+                        <div
+                            style={{
+                                marginRight: "auto",
+                                marginTop: "auto",
+                                marginBottom: "auto",
+                            }}
+                        >
+                            <p
+                                style={{ fontWeight: "600", fontSize: "12px" }}
+                                className="text-muted"
+                            >
+                                BLACK rewards left
+                            </p>
+                        </div>
+                        {/* <small className="text-site-primary font-weight-semi-bold text-uppercase">bond staked</small> */}
+                        <div style={{ marginLeft: "auto" }}>
+                            <p style={{ fontWeight: "600", textAlign: "center" }}>
+                                <img
+                                    left
+                                    width="15px"
+                                    //   style={{ marginTop:'auto' , marginBottom:'auto',marginLeft:'10px',marginRight:'10px' }}
+                                    //   style={{ marginButtom: "auto" }}
+                                    src={"https://blackcollateral.com/wp-content/uploads//2021/05/logo-svg.svg"}
+                                    alt="Card image cap"
+                                />
+                                 {parseFloat(communitybalance/1000000000).toFixed(3)}
+                            </p>
+                        </div>
+                    </div>
+                    <div className="d-flex  pl-3 pr-3 mt-2 mb-2">
+                        <div
+                            style={{
+                                marginRight: "auto",
+                                marginTop: "auto",
+                                marginBottom: "auto",
+                            }}
+                        >
+                            <p
+                                style={{ fontWeight: "600", fontSize: "12px" }}
+                                className="text-muted"
+                            >
+                                Pool balance
+                            </p>
+                        </div>
+                        {/* <small className="text-site-primary font-weight-semi-bold text-uppercase">bond staked</small> */}
+                        <div style={{ marginLeft: "auto" }}>
+                            <p style={{ fontWeight: "600", textAlign: "center" }}>
+                                <img
+                                    left
+                                    width="15px"
+                                    //   style={{ marginTop:'auto' , marginBottom:'auto',marginLeft:'10px',marginRight:'10px' }}
+                                    //   style={{ marginButtom: "auto" }}
+                                    src={icon1}
+                                    alt="Card image cap"
+                                />
+                               {parseFloat(balancepair/1000000000000000000).toFixed(3)}
+                            </p>
+                        </div>
+                    </div>
+                       
+                    <Button  className={`ml-3 mr-3 pb-0 mb-0 mt-2 mb-2
+                        `} color="site-primary" width="full" onClick={e => {history.push("/lp-stake")}}><b>View pool</b></Button> 
+                </Card>
+            </Col>
+              </>
   
+   
+   
+   </>):(<>
            {stakeenddate===1 ? (
               <>
                    <Col xl="4" md="6" className="mb-4">
@@ -616,6 +948,169 @@ const Pools = () => {
         </Col>
         </>
            )}
+           </>)}
+           {localStorage.getItem("wallet")===null || localStorage.getItem("wallet")==="" ||localStorage.getItem("wallet")==='undefined' ||localStorage.getItem("wallet")===undefined ?(<>
+            <Col xl="4" md="6" className="mb-4">
+                <Card className="custom-card mt-2 mb-2 ml-0 mr-0 p-2">
+                    <div className="d-flex" style={{ padding: "12px" }}>
+                        <img
+                            className="pool-card-image"
+                            src={"https://blackcollateral.com/wp-content/uploads//2021/05/logo-svg.svg"}
+                            alt="Card image cap"
+                        />
+                        {/* <small className="text-site-primary font-weight-semi-bold text-uppercase">bond staked</small> */}
+                        <div
+                            className=" pl-2 pr-2 align-item-center"
+                            style={{
+                                marginRight: "10px",
+                                marginTop: "auto",
+                                marginBottom: "auto",
+                            }}
+                        >
+                            <p style={{ fontWeight: "600", margin: "auto" }}>
+                                Black
+                            </p>
+                        </div>
+                    </div>
+                    <div style={{ padding: "12px" }}>
+                        <PoolCardTabs />
+                    </div>
+                    <div className="d-flex pl-3 pr-3 mt-2 mb-2">
+                        <div
+                            style={{
+                                marginRight: "auto",
+                                marginTop: "auto",
+                                marginBottom: "auto",
+                            }}
+                        >
+                            <p
+                                style={{ fontWeight: "600", fontSize: "12px" }}
+                                className="text-muted"
+                            >
+                                APR
+                            </p>
+                        </div>
+                        {/* <small className="text-site-primary font-weight-semi-bold text-uppercase">bond staked</small> */}
+                        <div style={{ marginLeft: "auto" }}>
+                            <p>
+                                <img
+                                    left
+                                    width="15px"
+                                    style={{
+                                        marginTop: "auto",
+                                        marginBottom: "auto",
+                                        marginLeft: "10px",
+                                        marginRight: "10px",
+                                    }}
+                                    //   style={{ marginButtom: "auto" }}
+                                    src={"https://blackcollateral.com/wp-content/uploads//2021/05/logo-svg.svg"}
+                                    alt="Card image cap"
+                                />
+                                <b>{0.00} %</b>
+                            </p>
+                        </div>
+                    </div>
+                    <div className="d-flex  pl-3 pr-3 mt-2 mb-2">
+                        <div
+                            style={{
+                                marginRight: "auto",
+                                marginTop: "auto",
+                                marginBottom: "auto",
+                            }}
+                        >
+                            <p
+                                style={{ fontWeight: "600", fontSize: "12px" }}
+                                className="text-muted"
+                            >
+                                BLACK daily rewards
+                            </p>
+                        </div>
+                        {/* <small className="text-site-primary font-weight-semi-bold text-uppercase">bond staked</small> */}
+                        <div style={{ marginLeft: "auto" }}>
+                            <p style={{ fontWeight: "600", textAlign: "center" }}>
+                                <img
+                                    left
+                                    width="15px"
+                                    //   style={{ marginTop:'auto' , marginBottom:'auto',marginLeft:'10px',marginRight:'10px' }}
+                                    //   style={{ marginButtom: "auto" }}
+                                    src={"https://blackcollateral.com/wp-content/uploads//2021/05/logo-svg.svg"}
+                                    alt="Card image cap"
+                                />
+                                  {0.00}
+                               
+                            </p>
+                        </div>
+                    </div>
+                    <div className="d-flex  pl-3 pr-3 mt-2 mb-2">
+                        <div
+                            style={{
+                                marginRight: "auto",
+                                marginTop: "auto",
+                                marginBottom: "auto",
+                            }}
+                        >
+                            <p
+                                style={{ fontWeight: "600", fontSize: "12px" }}
+                                className="text-muted"
+                            >
+                                BLACK rewards left
+                            </p>
+                        </div>
+                        {/* <small className="text-site-primary font-weight-semi-bold text-uppercase">bond staked</small> */}
+                        <div style={{ marginLeft: "auto" }}>
+                            <p style={{ fontWeight: "600", textAlign: "center" }}>
+                                <img
+                                    left
+                                    width="15px"
+                                    //   style={{ marginTop:'auto' , marginBottom:'auto',marginLeft:'10px',marginRight:'10px' }}
+                                    //   style={{ marginButtom: "auto" }}
+                                    src={"https://blackcollateral.com/wp-content/uploads//2021/05/logo-svg.svg"}
+                                    alt="Card image cap"
+                                />
+                                 {parseFloat(communitybalance/1000000000).toFixed(3)}
+                            </p>
+                        </div>
+                    </div>
+                    <div className="d-flex  pl-3 pr-3 mt-2 mb-2">
+                        <div
+                            style={{
+                                marginRight: "auto",
+                                marginTop: "auto",
+                                marginBottom: "auto",
+                            }}
+                        >
+                            <p
+                                style={{ fontWeight: "600", fontSize: "12px" }}
+                                className="text-muted"
+                            >
+                                Pool balance
+                            </p>
+                        </div>
+                        {/* <small className="text-site-primary font-weight-semi-bold text-uppercase">bond staked</small> */}
+                        <div style={{ marginLeft: "auto" }}>
+                            <p style={{ fontWeight: "600", textAlign: "center" }}>
+                                <img
+                                    left
+                                    width="15px"
+                                    //   style={{ marginTop:'auto' , marginBottom:'auto',marginLeft:'10px',marginRight:'10px' }}
+                                    //   style={{ marginButtom: "auto" }}
+                                    src={"https://blackcollateral.com/wp-content/uploads//2021/05/logo-svg.svg"}
+                                    alt="Card image cap"
+                                />
+                               {parseFloat(balanceblack/1000000000).toFixed(3)}
+                            </p>
+                        </div>
+                    </div>
+                       
+                    <Button  className={`ml-3 mr-3 pb-0 mb-0 mt-2 mb-2
+                        `} color="site-primary" width="full" onClick={e => {history.push("/black-stake")}}><b>View pool</b></Button> 
+                </Card>
+            </Col>
+                
+        
+           
+           
+           </>):(<>
            {stakeenddate===1 ? (
                 <>
   <Col xl="4" md="6" className="mb-4">
@@ -861,7 +1356,7 @@ const Pools = () => {
               </>
               )}    
   
-
+  </>)}
         </Row>
     );
 }
