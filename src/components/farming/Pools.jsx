@@ -60,14 +60,18 @@ const Pools = () => {
         console.log("balancepair",balancepair);
         
         
-        var tokenPerBlock = 128.600823045;
+        var tokenPerBlock = 1.157407407;
         var BLOCKS_PER_YEAR =10512000;
                             
         const blackdailyreward =1000000/90 ;
         console.log("dailyreward",blackdailyreward);
         setBlackDailyreward(blackdailyreward);
     
-       const priceofbusd= await busdcontract.methods.balanceOf(contracts.cbusdbusdpair.address).call();
+      const priceofbusdpair= await busdcontract.methods.balanceOf(contracts.wbnbbusdpair.address).call();
+      const priceofwbnbpair= await wbnbcontract.methods.balanceOf(contracts.wbnbbusdpair.address).call();
+      const pairprice =(priceofbusdpair)/(priceofwbnbpair);
+      console.log("pairprice",pairprice);
+      const priceofbusd= await busdcontract.methods.balanceOf(contracts.cbusdbusdpair.address).call();
        const priceofcbusd= await cbusdcontract.methods.balanceOf(contracts.cbusdbusdpair.address).call();
        const carbonprice1= (priceofbusd)/(priceofcbusd);
        const carbonprice=(parseFloat(carbonprice1).toFixed(3));
@@ -79,8 +83,9 @@ const Pools = () => {
         const priceofblack= await blackcontract.methods.balanceOf(contracts.blackBnbLp.address).call();
         
         const blackprice1= (priceofwbnb)/(priceofblack);
+        console.log("blackpricenow",blackprice1);
         const blackprices=(parseFloat(blackprice1/1000000000).toFixed(5));
-
+            
         // const blackprice1=await  blackoracle.methods.getDittoBnbRate().call();       
         // const blackprices=(parseFloat((blackprice1[3])/1000000000000000000).toFixed(13)); 
         setBlackprice(blackprices)      
