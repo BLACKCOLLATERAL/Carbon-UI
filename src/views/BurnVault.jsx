@@ -358,8 +358,8 @@ const BurnVault = () => {
 
 </div>)):((<div>
  <center>
-  <text className="mt-3 text-Black" >YOU NEED TO WAIT FOR DEPOSIT  TILL THIS TIME </text></center><br/>
-  <center><Button color="dark"  className="text-center">{t41} Day : {t11} Hrs : {t21} Min : {t31} Sec</Button></center>
+  <text className="mt-3 text-Black" ><b>YOU NEED TO WAIT FOR DEPOSIT  TILL THIS TIME</b> </text></center><br/>
+  <center><Button color="dark"  className="text-center"><b>{t41} Day : {t11} Hrs : {t21} Min : {t31} Sec</b></Button></center>
 
 
 </div>))
