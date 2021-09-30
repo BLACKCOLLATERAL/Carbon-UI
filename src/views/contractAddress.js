@@ -47,4 +47,7 @@ export const contracts ={
     sentinel:{
         address:'0x0Ef04FFA95f2eC2D07a5a196b4cEFB9d1076D43c',
     },
+    wbnbbusdpair:{
+        address:'0x58f876857a02d6762e0101bb5c46a8c1ed44dc16',
+    },
 };
