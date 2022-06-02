@@ -28,6 +28,8 @@ import icon5 from "../../assets/img/icon5.PNG";
 import icon6 from "../../assets/img/icon6.PNG";
 import icon7 from "../../assets/img/icon7.PNG";
 import icon8 from "../../assets/img/icon8.PNG";
+import beffyicon from "../../assets/img/beffylogo.png";
+
 import busd from "../../views/busdAbi";
 import web3 from "../../web3";
 import valutadapter from"../../views/vaultAdapterAbi";
@@ -112,7 +114,7 @@ const Markets = (props) => {
               marginRight: "10px",
             }}
             //   style={{ marginButtom: "auto" }}
-            src="https://www.beefy.finance/img/beefy.svg"
+            src={beffyicon}
             alt="Card image cap"
           />
           BIFI{"(coming soon)"}

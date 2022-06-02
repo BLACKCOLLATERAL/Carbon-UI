@@ -59,7 +59,7 @@ const Blackstake = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             var  currentdate=(new Date().getTime())/1000;
-            var enddatediff = 1635156735-currentdate;
+            var enddatediff = 1656755783-currentdate;
             if(enddatediff>0){
                 setStakeendDate(1);
         

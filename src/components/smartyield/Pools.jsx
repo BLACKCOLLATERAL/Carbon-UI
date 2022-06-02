@@ -16,7 +16,7 @@ import icon10 from "../../assets/img/icon.PNG";
 import icon9 from "../../assets/img/icon2.PNG";
 import icon3 from "../../assets/img/icon3.PNG";
 import PoolCardTabs from "../farming/PoolCardTabs";
-
+import blackicon from "../../assets/img/blacklogo.PNG";
 const Pools = (props) => {
   let [activeTab, setActiveTab] = useState("Finance");
   let [activeTab1, setActiveTab1] = useState("null");
@@ -337,10 +337,10 @@ const Pools = (props) => {
                     <p style={{ fontWeight: "600", textAlign: "center" }}>
                       <img
                         left
-                        width="15px"
+                        width="25px"
                         //   style={{ marginTop:'auto' , marginBottom:'auto',marginLeft:'10px',marginRight:'10px' }}
                         //   style={{ marginButtom: "auto" }}
-                        src={icon10}
+                        src={blackicon}
                         alt="Card image cap"
                       />
                       61,458.6806
@@ -562,7 +562,7 @@ const Pools = (props) => {
                       marginBottom: "auto",
                       marginRight:'10px'
                     }}
-                    src={icon10}
+                    src={blackicon}
                     alt="Card image cap"
                   />
                   58,366.7328
@@ -1137,7 +1137,7 @@ const Pools = (props) => {
                         width="15px"
                         //   style={{ marginTop:'auto' , marginBottom:'auto',marginLeft:'10px',marginRight:'10px' }}
                         //   style={{ marginButtom: "auto" }}
-                        src={icon10}
+                        src={blackicon}
                         alt="Card image cap"
                       />
                       61,458.6806
@@ -1395,7 +1395,7 @@ const Pools = (props) => {
                         width="15px"
                         //   style={{ marginTop:'auto' , marginBottom:'auto',marginLeft:'10px',marginRight:'10px' }}
                         //   style={{ marginButtom: "auto" }}
-                        src={icon10}
+                        src={blackicon}
                         alt="Card image cap"
                       />
                       61,458.6806

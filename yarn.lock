@@ -6113,6 +6113,11 @@
   "resolved" "https://registry.npmjs.org/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz"
   "version" "1.0.1"
 
+"g@^2.0.1":
+  "integrity" "sha512-Fi6Ng5fZ/ANLQ15H11hCe+09sgUoNvDEBevVgx3KoYOhsH5iLNPn54hx0jPZ+3oSWr+xajnp2Qau9VmPsc7hTA=="
+  "resolved" "https://registry.npmjs.org/g/-/g-2.0.1.tgz"
+  "version" "2.0.1"
+
 "gauge@~2.7.3":
   "integrity" "sha1-LANAXHU4w51+s3sxcCLjJfsBi/c="
   "resolved" "https://registry.npmjs.org/gauge/-/gauge-2.7.4.tgz"
